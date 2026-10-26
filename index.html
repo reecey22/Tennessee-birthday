@@ -271,7 +271,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     <div class="facts">
       <span class="fact">Mid-November weekend · vote below</span>
       <span class="fact">Ride out 7:30 am</span>
-      <span class="fact">Home around 9:45 pm</span>
+      <span class="fact">Home 9:45 pm, or 11:45 with the bull</span>
       <span class="fact">Dress code: fierce fall cowgirl</span>
     </div>
     <div class="actions">
@@ -296,7 +296,8 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
         <li class="stop"><time>1:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Downtown walk <span class="price">Free</span></h3><p>Walnut Street pedestrian bridge to Coolidge Park and the North Shore shops, back along the Riverwalk to the Bluff View Art District for coffee.</p></div></li>
         <li class="stop opt"><time>3:45 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ruby Falls High Point ZIP <span class="price">$21.95</span> <span class="tag">Optional</span></h3><p>Round-trip zipline plus the 40-foot climbing wall, on Lookout Mountain.</p></div></li>
         <li class="stop opt"><time>5:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Rock City: Enchanted Garden of Lights <span class="price">from $31</span> <span class="tag">Optional</span></h3><p>Millions of lights on the rock trails, hot cocoa, and the "See Seven States" overlook at night. Timed tickets, sold online only.</p></div></li>
-        <li class="stop"><time>7:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride home</h3><p>Back in Atlanta around 9:45 pm.</p></div></li>
+        <li class="stop opt"><time>8:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Whiskey Cowgirl: dinner + mechanical bull <span class="price">Pay as you go</span> <span class="tag">Optional</span></h3><p>A Southside country bar at 1819 Broad St, about 15 minutes down the mountain, with a mechanical bull, live music, and line dancing. Bring your ID. The bull runs in the evening, so we'll confirm the time before the trip.</p></div></li>
+        <li class="stop"><time>9:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride home</h3><p>Back in Atlanta around 11:45 pm. Skipping the bull? The early car can leave Rock City at 7:30 pm and be home around 9:45.</p></div></li>
       </ol>
     </div>
     <p class="note">Tubing is off the list: river tubing near Chattanooga is a summer thing, and the nearest snow tubing is about 3 hours away in Gatlinburg.</p>
@@ -514,13 +515,14 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     { id: "ride", label: "Horseback ride", cost: 62, show: "≈ $50–75" },
     { id: "walk", label: "Downtown walk", cost: 0, show: "Free" },
     { id: "zip", label: "Ruby Falls zipline", cost: 22, show: "$21.95" },
-    { id: "lights", label: "Rock City lights", cost: 31, show: "from $31" }
+    { id: "lights", label: "Rock City lights", cost: 31, show: "from $31" },
+    { id: "bull", label: "Whiskey Cowgirl + bull", cost: 0, show: "Pay as you go", off: true }
   ];
   const FOOD = 40, CAR_LOW = 90, CAR_HIGH = 140;
   const $ = (id) => document.getElementById(id);
 
   $("dates").innerHTML = DATES.map(d => `<label class="chip"><input type="checkbox" id="d-${d.id}" value="${d.id}"><span>${d.label}</span></label>`).join("");
-  $("acts").innerHTML = ACTS.map(a => `<label class="act" for="a-${a.id}"><input type="checkbox" id="a-${a.id}" value="${a.id}" checked><b>${a.label}</b><span class="price">${a.show}</span></label>`).join("");
+  $("acts").innerHTML = ACTS.map(a => `<label class="act" for="a-${a.id}"><input type="checkbox" id="a-${a.id}" value="${a.id}"${a.off ? "" : " checked"}><b>${a.label}</b><span class="price">${a.show}</span></label>`).join("");
 
   let guests = [];
   let myId = null;
