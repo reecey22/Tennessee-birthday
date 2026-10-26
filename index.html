@@ -136,6 +136,7 @@ section h2 { font-size: clamp(30px, 5vw, 44px); color: var(--ink); }
 .act b { font-weight: 700; }
 .act .price { color: #8a3a12; }
 .estimate { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; border-top: 2px dashed #b88a5a; padding-top: 16px; font-weight: 700; }
+.est-note { margin: -12px 0 0; font-size: 13px; line-height: 1.5; color: #7a5636; max-width: 60ch; }
 .estimate strong { font-family: var(--display); font-weight: 400; font-size: 30px; color: #6e1c1c; }
 .btnrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 button { font-family: var(--display); font-size: 20px; border: 0; border-radius: 4px; padding: 12px 26px; background: #6e1c1c; color: #fff3df; cursor: pointer; box-shadow: 3px 3px 0 #2b1a0e; }
@@ -449,6 +450,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
           <span>Your estimated cost <span class="hint" id="est-detail"></span></span>
           <strong id="est">$0</strong>
         </div>
+        <p class="est-note" id="est-note"></p>
         <div class="btnrow">
           <button type="submit" id="save">Save my RSVP</button>
           <span class="status" id="status" role="status"></span>
@@ -546,7 +548,10 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     if (f.car !== "meet") {
       const n = Math.max(riders(), 1);
       low += CAR_LOW / n; high += CAR_HIGH / n;
-      detail = `food, activities, car split ${n} way${n === 1 ? "" : "s"}`;
+      detail = "food, activities, and your share of the car";
+      $("est-note").textContent = `The car (about $${CAR_LOW}–${CAR_HIGH} for the rental, gas, and parking) is split evenly among everyone who RSVPs "I'm in" and rides with the group. Right now that's ${n} ${n === 1 ? "person" : "people"}, so ${n === 1 ? "the whole car is counted for you" : `your share is about $${Math.round(CAR_LOW / n)}–${Math.round(CAR_HIGH / n)}`}. Your share drops as more people RSVP.`;
+    } else {
+      $("est-note").textContent = "You're meeting the group there, so no car cost is included.";
     }
     $("est").textContent = Math.round(low) === Math.round(high) ? `$${Math.round(low)}` : `$${Math.round(low)}–${Math.round(high)}`;
     $("est-detail").textContent = `(${detail})`;
