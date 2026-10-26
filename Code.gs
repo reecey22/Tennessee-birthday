@@ -11,6 +11,8 @@ const STATUSES = ['yes', 'maybe', 'no'];
 const DATES = ['nov14', 'nov15', 'nov21', 'nov22'];
 const ACTS = ['ride', 'walk', 'zip', 'lights'];
 const CARS = ['ride', 'drive', 'meet', ''];
+const MSG_SHEET = 'Messages';
+const MAX_MESSAGES_PER_DAY = 40; // stops a flood of emails if someone abuses the form
 
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -62,6 +64,7 @@ function doPost(e) {
   lock.waitLock(10000);
   try {
     const d = JSON.parse(e.postData.contents);
+    if (d.type === 'message') return message_(d);
     const id = String(d.id || '').slice(0, 64);
     const key = String(d.key || '').slice(0, 64);
     if (!id || !key) return json_({ ok: false, error: 'missing_id' });
@@ -92,4 +95,35 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// A note for Niah: saved to the Messages tab and emailed to the sheet's owner. Never shown on the page.
+function message_(d) {
+  const text = clean_(d.text, 500);
+  if (!text) return json_({ ok: false, error: 'missing_text' });
+  const name = clean_(d.name, 60) || 'Someone';
+
+  const props = PropertiesService.getScriptProperties();
+  const day = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  const countKey = 'messages_' + day;
+  const sent = Number(props.getProperty(countKey) || 0);
+  if (sent >= MAX_MESSAGES_PER_DAY) return json_({ ok: false, error: 'limit' });
+  props.setProperty(countKey, String(sent + 1));
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(MSG_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(MSG_SHEET);
+    sh.appendRow(['time', 'name', 'message']);
+    sh.setFrozenRows(1);
+  }
+  sh.appendRow([new Date(), name, text]);
+
+  const plain = function (s) { return String(s).replace(/^'/, ''); };
+  MailApp.sendEmail({
+    to: Session.getEffectiveUser().getEmail(),
+    subject: 'Trip page message from ' + plain(name),
+    body: plain(name) + ' wrote:\n\n' + plain(text) + '\n\nAll messages: ' + ss.getUrl()
+  });
+  return json_({ ok: true });
 }

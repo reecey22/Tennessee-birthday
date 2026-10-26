@@ -41,16 +41,15 @@ Files in this folder:
    const SCRIPT_URL = "https://script.google.com/macros/s/AKfy.../exec";
    ```
 
-## Step 5 (optional): Add the soundtrack
+## Step 5 (optional): Change the soundtrack
 
-1. Find the song on YouTube, for example the official audio of "SWEET ★ HONEY ★ BUCKIIN'", and copy the link.
-2. In `index.html`, search for `const MUSIC_URL = "";` and paste the link between the quotes:
-   ```js
-   const MUSIC_URL = "https://www.youtube.com/watch?v=...";
-   ```
-3. Save the file.
+The page comes with its own original western tune, so you don't need to do anything. When a visitor taps **Ride in** on the opening screen, the music starts and the cowgirls ride across. A gold **Play/Pause the music** button stays in the corner.
 
-Browsers don't allow sound the moment a page opens, so the music starts on the visitor's first tap or click anywhere. A gold **Play the soundtrack** button in the corner lets them pause it. Leave the link empty and the button stays hidden.
+To use a different song instead, find it on YouTube, copy the link, and paste it between the quotes in `index.html`:
+```js
+const MUSIC_URL = "https://www.youtube.com/watch?v=...";
+```
+Browsers never play sound before a visitor taps, which is why the intro starts with a button.
 
 ## Step 6: Put the page online
 
@@ -72,6 +71,15 @@ Anyone with the link can see the page, but it isn't listed or searchable.
 3. Text the link to the group.
 
 ---
+
+## Messages to Niah ("Text Niah")
+
+Friends can send you a note from the **Text Niah** section. Each one is saved to a **Messages** tab in your sheet and emailed to the Google account that owns the script, so you'll see it in your Gmail app.
+
+- It's an email, not a text message. Turn on Gmail notifications on your phone to get it like a text.
+- Messages are never shown on the page.
+- To stop spam from flooding your inbox, the script sends at most 40 messages a day.
+- The first time you deploy this version, Google asks for one more permission: **Send email as you**. That's what lets the script email you.
 
 ## Good to know
 
