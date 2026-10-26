@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Niah's Day Out in Tennessee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&family=Sancreek&family=Libre+Franklin:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: a tooled-leather western page — dusk hero over Lookout Mountain with falling leaves, a stitched trail route, a "wanted poster" RSVP beside the posse list. Single dark look by design. */
+:root {
+  --bg: #1a110c;          /* saddle leather, dark */
+  --surface: #26170f;     /* tooled panel */
+  --raised: #31200f;
+  --ink: #f3e4cc;         /* rawhide */
+  --muted: #c3a582;
+  --line: #4a3020;
+  --stitch: #b8783e;
+  --rust: #d4581f;        /* burnt orange */
+  --gold: #e6a93b;        /* brass concho */
+  --oxblood: #7d1f22;
+  --good: #8fbf6a; --warn: #e6a93b; --bad: #e0705a;
+  --display: "Rye", "Rockwell", Georgia, serif;
+  --script: "Sancreek", "Rye", Georgia, serif;
+  --body: "Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Courier Prime", "Courier New", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(212,88,31,.10), transparent 55%),
+    radial-gradient(ellipse at 90% 60%, rgba(125,31,34,.16), transparent 50%);
+  color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.6;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.1; }
+h2 { font-family: var(--display); }
+.eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800; color: var(--gold); display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before, .eyebrow::after { content: "★"; font-size: 10px; color: var(--rust); letter-spacing: 0; }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #2a0f14 0%, #6e2417 38%, #c2501c 70%, #e6913b 100%); border-bottom: 4px solid var(--gold); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero .wrap { position: relative; padding-block: 64px 120px; display: grid; gap: 18px; justify-items: start; }
+.hero .badge { font-family: var(--mono); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #fff3df; border: 2px solid #fff3df; padding: 4px 12px; transform: rotate(-2deg); }
+.hero h1 { font-family: var(--display); font-size: clamp(40px, 8vw, 84px); color: #fff3df; text-shadow: 3px 3px 0 #3a120e, 6px 6px 0 rgba(0,0,0,.25); max-width: 13ch; }
+.hero h1 em { font-family: var(--script); font-style: normal; color: var(--gold); display: block; font-size: .62em; margin-top: 6px; text-shadow: 3px 3px 0 #3a120e; }
+.posse { position: absolute; overflow: visible; right: 4%; bottom: 0; height: 170px; width: auto; max-width: 60%; pointer-events: none; }
+@media (max-width: 600px) { .posse { height: 100px; right: 2%; } }
+.hatted { position: relative; display: inline-block; }
+.hat { position: absolute; left: 50%; bottom: 74%; width: 1.25em; height: auto; transform: translateX(-52%) rotate(-12deg); filter: drop-shadow(3px 3px 0 #3a120e); pointer-events: none; }
+.hero h1 { padding-top: .35em; }
+.tagline { font-family: var(--script); font-size: clamp(24px, 4vw, 34px) !important; color: #fff3df !important; text-shadow: 2px 2px 0 #3a120e !important; letter-spacing: .02em; margin: -4px 0 0 !important; }
+.hero p { max-width: 56ch; margin: 0; color: #fbe8cd; font-size: 18px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.fact { background: rgba(26,17,12,.55); border: 1px dashed rgba(255,243,223,.5); border-radius: 4px; padding: 6px 12px; font-size: 14px; font-weight: 600; color: #fff3df; }
+.cta { display: inline-block; background: var(--gold); color: #2a1406; font-family: var(--display); font-size: 20px; text-decoration: none; padding: 12px 28px; border-radius: 4px; box-shadow: 4px 4px 0 #3a120e; outline: 2px dashed #7a4a18; outline-offset: -7px; }
+.cta:hover { background: #f2bb52; }
+.cta:focus-visible { outline: 3px solid #fff3df; outline-offset: 3px; }
+
+section { padding-block: 56px 8px; }
+section > .wrap > header { display: grid; gap: 8px; margin-bottom: 28px; justify-items: start; }
+section h2 { font-size: clamp(30px, 5vw, 44px); color: var(--ink); }
+.lede { color: var(--muted); max-width: 62ch; margin: 0; }
+
+/* Stitched leather panel */
+.panel { background: var(--surface); border-radius: 14px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,220,170,.06); }
+.panel::before { content: ""; position: absolute; inset: 8px; border: 2px dashed var(--stitch); border-radius: 9px; opacity: .55; pointer-events: none; }
+
+/* Route */
+.route-panel { padding: 32px 28px 8px; }
+.route { list-style: none; margin: 0; padding: 0; display: grid; }
+.stop { display: grid; grid-template-columns: 92px 28px 1fr; gap: 0 14px; }
+.stop time { font-family: var(--mono); font-weight: 700; font-size: 15px; color: var(--gold); padding-top: 4px; text-align: right; }
+.rail { position: relative; display: flex; justify-content: center; }
+.rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed var(--line); }
+.stop:first-child .rail::before { top: 12px; }
+.stop:last-child .rail::before { bottom: calc(100% - 12px); }
+.dot { position: relative; width: 20px; height: 20px; margin-top: 3px; display: grid; place-items: center; color: var(--muted); font-size: 16px; line-height: 1; background: var(--surface); }
+.dot::before { content: "✦"; }
+.stop.opt .dot { color: var(--rust); }
+.stop.opt .dot::before { content: "★"; }
+.stop .body { padding-bottom: 28px; min-width: 0; }
+.stop h3 { font-family: var(--body); font-weight: 800; font-size: 20px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.stop p { margin: 4px 0 0; color: var(--muted); max-width: 60ch; }
+.price { font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--gold); white-space: nowrap; }
+.tag { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--bg); background: var(--rust); border-radius: 3px; padding: 2px 7px; }
+.note { margin: 16px 0 0; font-size: 14px; color: var(--muted); border-left: 3px solid var(--rust); padding-left: 12px; max-width: 62ch; }
+
+/* Outfits */
+.looks { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px; }
+.look { display: grid; grid-template-columns: 84px 1fr; gap: 2px 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; transition: border-color .15s, transform .15s; }
+.look:hover { border-color: var(--gold); transform: translateY(-2px) rotate(-.4deg); }
+.look:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.look .swatch { grid-row: 1 / 3; width: 84px; height: 84px; border-radius: 50%; overflow: hidden; display: block; box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--gold); transition: transform .2s; }
+.look .swatch svg { display: block; width: 100%; height: 100%; }
+.look:hover .swatch { transform: rotate(-4deg) scale(1.04); }
+.look b { font-weight: 800; }
+.look b::after { content: " \2197"; color: var(--rust); font-weight: 400; }
+.look > span:last-child { font-size: 13px; color: var(--muted); min-width: 0; }
+
+/* RSVP + posse */
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 24px; align-items: start; }
+@media (max-width: 820px) { .split { grid-template-columns: 1fr; } .stop { grid-template-columns: 66px 22px 1fr; gap: 0 10px; } .route-panel { padding: 26px 18px 4px; } }
+.card { padding: 30px 28px; display: grid; gap: 22px; min-width: 0; }
+.card h3 { font-family: var(--display); font-size: 26px; color: var(--gold); }
+.poster { background: #ead6b2; color: #2b1a0e; border-radius: 6px; box-shadow: 0 12px 30px rgba(0,0,0,.4); position: relative; }
+.poster::before { content: ""; position: absolute; inset: 10px; border: 3px double #6b3a1c; border-radius: 3px; pointer-events: none; }
+.poster .head { text-align: center; display: grid; gap: 2px; }
+.poster .head span { font-family: var(--display); font-size: clamp(34px, 6vw, 46px); color: #6e1c1c; letter-spacing: .04em; line-height: 1; }
+.poster .head small { font-family: var(--mono); font-size: 13px; letter-spacing: .25em; text-transform: uppercase; color: #6b3a1c; }
+.field { display: grid; gap: 8px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.field > label, .field > legend { font-weight: 800; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; padding: 0; color: #4a2610; }
+.hint { font-size: 13px; color: #7a5636; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.poster input[type="text"], .poster textarea { width: 100%; font: inherit; color: #2b1a0e; background: #f6ead3; border: 2px solid #b88a5a; border-radius: 4px; padding: 10px 12px; }
+.poster textarea { min-height: 72px; resize: vertical; }
+.poster input:focus-visible, .poster textarea:focus-visible { outline: 3px solid #d4581f; outline-offset: 1px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chip span { display: inline-flex; align-items: center; border: 2px solid #b88a5a; background: #f6ead3; border-radius: 4px; padding: 7px 14px; font-size: 14px; font-weight: 700; cursor: pointer; color: #4a2610; }
+.chip input:checked + span { background: #6e1c1c; border-color: #6e1c1c; color: #fff3df; }
+.chip input:focus-visible + span { outline: 3px solid #d4581f; outline-offset: 2px; }
+.chip input:disabled + span { opacity: .5; cursor: not-allowed; }
+.acts { display: grid; gap: 8px; }
+.act { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; border: 2px solid #c9a477; border-radius: 4px; padding: 10px 14px; cursor: pointer; background: #f6ead3; }
+.act:has(input:checked) { border-color: #6e1c1c; background: #f1dcc0; }
+.act input { width: 18px; height: 18px; accent-color: #6e1c1c; margin: 0; }
+.act b { font-weight: 700; }
+.act .price { color: #8a3a12; }
+.estimate { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; border-top: 2px dashed #b88a5a; padding-top: 16px; font-weight: 700; }
+.estimate strong { font-family: var(--display); font-weight: 400; font-size: 30px; color: #6e1c1c; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+button { font-family: var(--display); font-size: 20px; border: 0; border-radius: 4px; padding: 12px 26px; background: #6e1c1c; color: #fff3df; cursor: pointer; box-shadow: 3px 3px 0 #2b1a0e; }
+button:hover { background: #8a2424; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible { outline: 3px solid #d4581f; outline-offset: 2px; }
+.status { font-size: 14px; font-weight: 600; color: #6b3a1c; }
+.status.ok { color: #2f6a2c; } .status.err { color: #9a2a1a; }
+.banner { font-size: 14px; font-weight: 600; background: #f1dcc0; border: 2px dashed #6e1c1c; border-radius: 4px; padding: 10px 14px; color: #4a2610; }
+
+.tally { gap: 20px; }
+.counts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.count { background: var(--raised); border-radius: 8px; padding: 12px 6px; text-align: center; }
+.count b { display: block; font-family: var(--display); font-weight: 400; font-size: 30px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.count small { color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; }
+.sub { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: 124px 1fr 28px; gap: 10px; align-items: center; font-size: 14px; }
+.bar .track { height: 10px; background: var(--raised); border-radius: 5px; overflow: hidden; }
+.bar .fill { height: 100%; background: linear-gradient(90deg, var(--rust), var(--gold)); border-radius: 5px; width: 0; transition: width .4s ease; }
+.bar .n { font-family: var(--mono); font-weight: 700; text-align: right; color: var(--gold); }
+.guests { list-style: none; margin: 0; padding: 0; display: grid; }
+.guest { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 0; border-top: 1px dashed var(--line); }
+.guest .nm { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+.guest .meta { grid-column: 1 / -1; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.pill { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; border-radius: 3px; padding: 3px 9px; align-self: start; border: 1px solid currentColor; }
+.pill.yes { color: var(--good); } .pill.maybe { color: var(--warn); } .pill.no { color: var(--bad); }
+.empty { color: var(--muted); font-size: 14px; margin: 0; }
+
+.tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+.tip { border-top: 3px solid var(--rust); padding-top: 12px; }
+.tip h3 { font-family: var(--body); font-weight: 800; font-size: 18px; margin-bottom: 4px; }
+.tip p { margin: 0; color: var(--muted); font-size: 15px; }
+.bag { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
+.bag-group { padding: 24px 22px 20px; min-width: 0; }
+.bag-group h3 { font-family: var(--display); font-size: 20px; color: var(--gold); margin-bottom: 12px; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.checks label { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; padding: 6px 4px; border-radius: 6px; cursor: pointer; }
+.checks label:hover { background: var(--raised); }
+.checks input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--rust); }
+.checks input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.checks span { font-weight: 600; min-width: 0; }
+.checks small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+.checks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rust); }
+.music { position: fixed; z-index: 20; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); display: inline-flex; align-items: center; gap: 10px; font-family: var(--body); font-weight: 800; font-size: 14px; letter-spacing: .04em; background: var(--gold); color: #2a1406; border-radius: 999px; padding: 10px 18px 10px 14px; box-shadow: 3px 3px 0 #3a120e, 0 8px 24px rgba(0,0,0,.4); }
+.music:hover { background: #f2bb52; }
+.music .eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
+.music .eq i { width: 3px; height: 4px; background: #2a1406; border-radius: 1px; }
+.music.playing .eq i { animation: eq .9s ease-in-out infinite; }
+.music.playing .eq i:nth-child(2) { animation-delay: .2s; } .music.playing .eq i:nth-child(3) { animation-delay: .4s; }
+@keyframes eq { 0%,100% { height: 4px; } 50% { height: 14px; } }
+@media (prefers-reduced-motion: reduce) { .music.playing .eq i { animation: none; height: 10px; } }
+.music-frame { position: fixed; width: 1px; height: 1px; left: -10px; bottom: 0; opacity: 0; pointer-events: none; border: 0; }
+footer { padding-block: 48px; color: var(--muted); font-size: 13px; }
+footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold); display: block; margin-bottom: 6px; }
+@media (prefers-reduced-motion: reduce) { .bar .fill, .look { transition: none; } .look:hover { transform: none; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <svg class="posse" viewBox="0 0 320 160" aria-hidden="true">
+    <defs>
+      <g id="horse">
+        <path d="M16 84 C6 92 5 110 9 122 C13 110 16 98 22 90 Z"/>
+        <circle cx="27" cy="91" r="13"/>
+        <ellipse cx="44" cy="93" rx="22" ry="12.5"/>
+        <circle cx="61" cy="92" r="11"/>
+        <path d="M55 88 L64 72 C68 63 74 57 79 56 L86 61 L73 86 Z"/>
+        <path d="M60 74 C64 64 70 58 77 56 C72 62 67 68 63 78 Z"/>
+        <path d="M77 55 C84 55 92 69 95 77 C96 82 91 85 87 82 C84 76 80 70 75 66 Z"/>
+        <path d="M77 57 L79 49 L82 57 Z"/>
+        <polyline points="20,98 17,123 19,147" fill="none" stroke-width="4.6"/>
+        <polyline points="31,101 34,124 31,147" fill="none" stroke-width="4.6"/>
+        <polyline points="56,101 55,124 57,147" fill="none" stroke-width="4.6"/>
+        <polyline points="66,98 71,121 69,147" fill="none" stroke-width="4.6"/>
+        <path d="M15 146 h8 v4 h-8 Z M27 146 h8 v4 h-8 Z M53 146 h8 v4 h-8 Z M65 146 h8 v4 h-8 Z"/>
+      </g>
+      <g id="rider-body">
+        <path d="M39 44 C35 52 35 60 37 67 L44 63 L44 44 Z"/>
+        <circle cx="44" cy="46" r="5"/>
+        <path d="M42.5 49 h3 v6 h-3 Z"/>
+        <path d="M38 54 Q44 51 50 54 C53 57 54.5 62 51.5 66 C49.5 68 48 69 48 71 C51 74 55 78 54 83 L35 83 C34 78 39 74 41 71 C41 69 40 68 38 66 C36 62 35 57 38 54 Z"/>
+        <path d="M37 79 C45 77 53 81 57 88 L53 93 C48 89 42 88 36 87 Z"/>
+        <polyline points="54,90 53,104 55,109" fill="none" stroke-width="4.4"/>
+        <path d="M51 105 L57 105 L60 111 L51 112 Z"/>
+      </g>
+      <g id="rider-a">
+        <use href="#rider-body"/>
+        <ellipse cx="44" cy="41" rx="11" ry="2" transform="rotate(-8 44 41)"/>
+        <path d="M38 41 C38 34 41 32 44 34 C47 32 50 34 50 41 Z" transform="rotate(-8 44 41)"/>
+        <polyline points="49,56 56,67 66,70" fill="none" stroke-width="3.4"/>
+        <line x1="66" y1="70" x2="84" y2="75" stroke-width="1"/>
+      </g>
+      <g id="rider-b">
+        <use href="#rider-body"/>
+        <polyline points="49,56 56,67 66,70" fill="none" stroke-width="3.4"/>
+        <line x1="66" y1="70" x2="84" y2="75" stroke-width="1"/>
+        <polyline points="39,56 32,44 33,31" fill="none" stroke-width="3.4"/>
+        <ellipse cx="33" cy="29" rx="10" ry="1.9" transform="rotate(-18 33 29)"/>
+        <path d="M28 29 C28 22 30 20 33 22 C36 20 38 22 38 29 Z" transform="rotate(-18 33 29)"/>
+      </g>
+    </defs>
+    <g fill="#1a110c" stroke="#1a110c" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="translate(6 14) scale(.9)"><use href="#horse"/><use href="#rider-a"/></g>
+      <g transform="translate(104 4) scale(.98)"><use href="#horse"/><use href="#rider-b"/></g>
+      <g transform="translate(212 12) scale(.92)"><use href="#horse"/><use href="#rider-a"/></g>
+      <path d="M0 160 L0 151 Q160 145 320 151 L320 160 Z" stroke="none"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <span class="badge">Birthday ride · Chattanooga, TN</span>
+    <h1><span class="hatted"><svg class="hat" viewBox="0 0 120 60" aria-hidden="true"><path d="M38 40 C36 22 40 8 50 6 C55 5 58 11 60 11 C62 11 65 5 70 6 C80 8 84 22 82 40 Z" fill="#8a4a22"/><path d="M50 6 C55 5 58 11 60 11 C62 11 65 5 70 6 C66 10 63 16 60 16 C57 16 54 10 50 6 Z" fill="#6b3517"/><path d="M38 34 Q60 39 82 34 L82.5 40 Q60 45 37.5 40 Z" fill="#e6a93b"/><circle cx="60" cy="39" r="2.6" fill="#fff3df"/><path d="M4 38 C14 50 34 50 60 50 C86 50 106 50 116 38 C112 48 96 58 60 58 C24 58 8 48 4 38 Z" fill="#a85a28"/><path d="M4 38 C14 50 34 50 60 50 C86 50 106 50 116 38 C108 44 90 47 60 47 C30 47 12 44 4 38 Z" fill="#c9743a"/></svg>N</span>iah's Day Out <em>in Tennessee</em></h1>
+    <p class="tagline">Ladies, we ride at dawn</p>
+    <p>Saddle up. Horses in the morning, the riverfront in the afternoon, a zipline off Lookout Mountain, and Rock City lit up after dark. RSVP below and pick the parts you're riding for.</p>
+    <div class="facts">
+      <span class="fact">Mid-November weekend · vote below</span>
+      <span class="fact">Ride out 7:30 am</span>
+      <span class="fact">Home around 9:45 pm</span>
+      <span class="fact">Dress code: fierce fall cowgirl</span>
+    </div>
+    <a class="cta" href="#rsvp">RSVP</a>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">The trail</span>
+      <h2>How the day runs</h2>
+      <p class="lede">Every stop is within about 30 minutes of downtown. Starred stops are paid and optional, so skip any you like and catch up with the posse at the next one.</p>
+    </header>
+    <div class="panel route-panel">
+      <ol class="route">
+        <li class="stop"><time>7:30 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride out of Atlanta</h3><p>Carpool up I-75 North. About 2 hours and 15 minutes with traffic.</p></div></li>
+        <li class="stop opt"><time>10:00 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Horseback trail ride <span class="price">≈ $50–75</span> <span class="tag">Optional</span></h3><p>Hidden Hills Farm &amp; Saddle Club in McDonald, TN, 25 minutes east of downtown. A guided ride on wooded trails, beginner friendly.</p></div></li>
+        <li class="stop"><time>12:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Lunch downtown</h3><p>Southside or downtown. Pay your own way.</p></div></li>
+        <li class="stop"><time>1:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Downtown walk <span class="price">Free</span></h3><p>Walnut Street pedestrian bridge to Coolidge Park and the North Shore shops, back along the Riverwalk to the Bluff View Art District for coffee.</p></div></li>
+        <li class="stop opt"><time>3:45 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ruby Falls High Point ZIP <span class="price">$21.95</span> <span class="tag">Optional</span></h3><p>Round-trip zipline plus the 40-foot climbing wall, on Lookout Mountain.</p></div></li>
+        <li class="stop opt"><time>5:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Rock City: Enchanted Garden of Lights <span class="price">from $31</span> <span class="tag">Optional</span></h3><p>Millions of lights on the rock trails, hot cocoa, and the "See Seven States" overlook at night. Timed tickets, sold online only.</p></div></li>
+        <li class="stop"><time>7:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride home</h3><p>Back in Atlanta around 9:45 pm.</p></div></li>
+      </ol>
+    </div>
+    <p class="note">Tubing is off the list: river tubing near Chattanooga is a summer thing, and the nearest snow tubing is about 3 hours away in Gatlinburg.</p>
+  </div>
+</section>
+
+<section id="outfits">
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">Dress code</span>
+      <h2>Fierce fall cowgirl</h2>
+      <p class="lede">Boots, denim, suede, and a hat you're not afraid to ride in. Dress for a saddle at 10 am and cold mountain air at 6 pm, so plan on a layer you can add after dark.</p>
+    </header>
+    <div class="looks">
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=fall%20cowgirl%20outfit" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-fall"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#e9c99a"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#3e5a7a"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#b5562a"/><g clip-path="url(#clip-fall)"></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#5a2f17"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#5a2f17"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#6b3a1c"/><rect x="39" y="17" width="22" height="3" fill="#e6a93b"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#6b3a1c"/></svg></span><b>Fall cowgirl</b><span>The overall vibe: boots, denim, warm browns</span></a>
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=western%20horseback%20riding%20outfit%20women" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-trail"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#cfd3b8"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#2f4a66"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#8a2d2a"/><g clip-path="url(#clip-trail)"><rect x="24" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="32" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="40" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="48" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="56" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="64" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="72" y="20" width="3" height="40" fill="#1c1c1c" opacity=".45"/><rect x="20" y="26" width="60" height="3" fill="#1c1c1c" opacity=".45"/><rect x="20" y="34" width="60" height="3" fill="#1c1c1c" opacity=".45"/><rect x="20" y="42" width="60" height="3" fill="#1c1c1c" opacity=".45"/><rect x="20" y="50" width="60" height="3" fill="#1c1c1c" opacity=".45"/></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#3a2414"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#3a2414"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#7a5a3a"/><rect x="39" y="17" width="22" height="3" fill="#3a2414"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#7a5a3a"/></svg></span><b>Trail ride ready</b><span>Jeans, flat-heel boots, nothing that flaps</span></a>
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=suede%20fringe%20jacket%20outfit%20fall" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-fringe"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#f0d9b8"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#e8dcc8"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#b07a46"/><g clip-path="url(#clip-fringe)"></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#6b3a1c"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#6b3a1c"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#a8743f"/><rect x="39" y="17" width="22" height="3" fill="#5a3418"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#a8743f"/><g><line x1="36" y1="55" x2="36" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="39" y1="55" x2="39" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="42" y1="55" x2="42" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="45" y1="55" x2="45" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="48" y1="55" x2="48" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="51" y1="55" x2="51" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="54" y1="55" x2="54" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="57" y1="55" x2="57" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="60" y1="55" x2="60" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="63" y1="55" x2="63" y2="61" stroke="#8a5a2e" stroke-width="1.4"/><line x1="24" y1="42.0" x2="22" y2="47.0" stroke="#8a5a2e" stroke-width="1.2"/><line x1="26" y1="43.3" x2="24" y2="48.3" stroke="#8a5a2e" stroke-width="1.2"/><line x1="28" y1="44.6" x2="26" y2="49.6" stroke="#8a5a2e" stroke-width="1.2"/><line x1="30" y1="45.9" x2="28" y2="50.9" stroke="#8a5a2e" stroke-width="1.2"/><line x1="70" y1="47.0" x2="72" y2="52.0" stroke="#8a5a2e" stroke-width="1.2"/><line x1="72" y1="45.7" x2="74" y2="50.7" stroke="#8a5a2e" stroke-width="1.2"/><line x1="74" y1="44.4" x2="76" y2="49.4" stroke="#8a5a2e" stroke-width="1.2"/><line x1="76" y1="43.1" x2="78" y2="48.1" stroke="#8a5a2e" stroke-width="1.2"/></g></svg></span><b>Suede &amp; fringe</b><span>A statement jacket that also keeps you warm</span></a>
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=black%20cowgirl%20outfit%20edgy" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-black"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#9a8f86"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#262626"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#1c1c1c"/><g clip-path="url(#clip-black)"><circle cx="44" cy="30" r="1.3" fill="#d8d8d8"/><circle cx="56" cy="30" r="1.3" fill="#d8d8d8"/><circle cx="40" cy="36" r="1.3" fill="#d8d8d8"/><circle cx="60" cy="36" r="1.3" fill="#d8d8d8"/><circle cx="38" cy="43" r="1.3" fill="#d8d8d8"/><circle cx="62" cy="43" r="1.3" fill="#d8d8d8"/><rect x="34" y="50" width="32" height="2" fill="#bdbdbd"/></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#111"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#111"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#141414"/><rect x="39" y="17" width="22" height="3" fill="#cfcfcf"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#141414"/><rect x="40" y="88" width="10" height="2" fill="#cfcfcf"/><rect x="59" y="88" width="10" height="2" fill="#cfcfcf"/></svg></span><b>Fierce in black</b><span>All-black western with silver hardware</span></a>
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=cowgirl%20birthday%20outfit" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-bday"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#f3c6cc"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#3e5a7a"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#b2304a"/><g clip-path="url(#clip-bday)"><circle cx="40" cy="30" r="1.2" fill="#f5d38a"/><circle cx="47" cy="34" r="1.2" fill="#f5d38a"/><circle cx="55" cy="31" r="1.2" fill="#f5d38a"/><circle cx="60" cy="38" r="1.2" fill="#f5d38a"/><circle cx="43" cy="41" r="1.2" fill="#f5d38a"/><circle cx="51" cy="44" r="1.2" fill="#f5d38a"/><circle cx="58" cy="48" r="1.2" fill="#f5d38a"/><circle cx="38" cy="50" r="1.2" fill="#f5d38a"/><circle cx="46" cy="50" r="1.2" fill="#f5d38a"/></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#f4efe6"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#f4efe6"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#f4efe6"/><rect x="39" y="17" width="22" height="3" fill="#e0607a"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#f4efe6"/><path d="M50 4 l1.5 3.5 3.8.3-2.9 2.4.9 3.7-3.3-2-3.3 2 .9-3.7-2.9-2.4 3.8-.3z" fill="#e6a93b"/></svg></span><b>Birthday girl</b><span>For Niah: a standout look with a little sparkle</span></a>
+      <a class="look" href="https://www.pinterest.com/search/pins/?q=western%20winter%20layering%20outfit%20shearling" target="_blank" rel="noopener"><span class="swatch"><svg viewBox="6 2 88 92" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><clipPath id="clip-night"><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z"/></clipPath></defs><rect x="0" y="0" width="100" height="100" fill="#d9cdbd"/><path d="M35 54 L65 54 L66 82 L54 82 L50 63 L46 82 L34 82 Z" fill="#2f4a66"/><path d="M50 56 L50 63" stroke="rgba(0,0,0,.25)" stroke-width="1"/><path d="M34 26 L44 23 L50 28 L56 23 L66 26 L76 42 L69 46 L66 39 L66 55 L34 55 L34 39 L31 46 L24 42 Z" fill="#6e4a32"/><g clip-path="url(#clip-night)"></g><path d="M36 74 L45 74 L46 87 L53 89 L53 93 L35 93 Z" fill="#4a3020"/><path d="M55 74 L64 74 L65 87 L72 89 L72 93 L54 93 Z" fill="#4a3020"/><path d="M39 21 C39 10 45 8 50 11 C55 8 61 10 61 21 Z" fill="#3a2a20"/><rect x="39" y="17" width="22" height="3" fill="#b8783e"/><ellipse cx="50" cy="21" rx="21" ry="4" fill="#3a2a20"/><path d="M40 24 L50 36 L60 24 L66 26 L58 40 L50 46 L42 40 L34 26 Z" fill="#efe4d2"/></svg></span><b>Night layers</b><span>Shearling and flannel for the Rock City lights</span></a>
+    </div>
+    <p class="note">Wear boots with a low, defined heel for the horses and pants rather than a skirt. For the zipline, keep it fitted and leave the hat in the car.</p>
+  </div>
+</section>
+
+<section id="purse">
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">Saddlebag check</span>
+      <h2>What's in your purse</h2>
+      <p class="lede">Carry a small crossbody you can wear on a horse and stash before the zipline. It's a 14-hour day that ends on a cold mountain, so pack for both. Tick things off as you pack; your checklist stays on your device.</p>
+    </header>
+    <div class="bag">
+      <div class="panel bag-group"><h3>Don't leave without</h3><ul class="checks">
+        <li><label><input type="checkbox" id="p-id"><span>ID and a card <small>Needed for the rental car and any age checks</small></span></label></li>
+        <li><label><input type="checkbox" id="p-student"><span>Student ID <small>Ask about discounts at ticket windows</small></span></label></li>
+        <li><label><input type="checkbox" id="p-cash"><span>$20–40 in cash <small>Parking, tips for the trail guide, snacks</small></span></label></li>
+        <li><label><input type="checkbox" id="p-tickets"><span>Tickets on your phone <small>Rock City and zipline times are booked ahead</small></span></label></li>
+      </ul></div>
+      <div class="panel bag-group"><h3>Long-day survival</h3><ul class="checks">
+        <li><label><input type="checkbox" id="p-charger"><span>Portable charger and cable <small>Photos all day, lights all night</small></span></label></li>
+        <li><label><input type="checkbox" id="p-snacks"><span>Snacks and a water bottle <small>For the drive and the barn</small></span></label></li>
+        <li><label><input type="checkbox" id="p-bandaids"><span>Blister bandages <small>New boots and a lot of walking</small></span></label></li>
+        <li><label><input type="checkbox" id="p-wipes"><span>Hand sanitizer and wipes <small>Horses are lovely and dusty</small></span></label></li>
+        <li><label><input type="checkbox" id="p-meds"><span>Pain reliever and any meds you take</span></label></li>
+      </ul></div>
+      <div class="panel bag-group"><h3>Cold mountain night</h3><ul class="checks">
+        <li><label><input type="checkbox" id="p-warmers"><span>Hand warmers <small>Cheap and a lifesaver at the lights</small></span></label></li>
+        <li><label><input type="checkbox" id="p-gloves"><span>Thin gloves <small>Touchscreen ones keep the photos coming</small></span></label></li>
+        <li><label><input type="checkbox" id="p-lip"><span>Lip balm <small>Cold, wind, and a long day</small></span></label></li>
+      </ul></div>
+      <div class="panel bag-group"><h3>Stay fierce</h3><ul class="checks">
+        <li><label><input type="checkbox" id="p-hair"><span>Hair ties or a claw clip <small>Hat hair and zipline wind</small></span></label></li>
+        <li><label><input type="checkbox" id="p-sun"><span>Sunglasses <small>Morning sun on the trail</small></span></label></li>
+        <li><label><input type="checkbox" id="p-touch"><span>Mini touch-up kit <small>Lipstick, powder, a compact mirror</small></span></label></li>
+        <li><label><input type="checkbox" id="p-scent"><span>Travel-size perfume <small>You'll have been at a barn</small></span></label></li>
+      </ul></div>
+    </div>
+    <p class="note" id="bag-count">0 of 16 packed</p>
+  </div>
+</section>
+
+<section id="rsvp">
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">RSVP</span>
+      <h2>Join the posse</h2>
+      <p class="lede">Your answer saves to the group guest list. To change it later, come back on the same phone or browser. Costs are estimates for planning, not final prices.</p>
+    </header>
+    <div class="split">
+      <form class="card poster" id="form" novalidate>
+        <div class="head"><span>WANTED</span><small>Riders for Niah's birthday</small></div>
+        <div class="banner" id="access" hidden></div>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" maxlength="60" autocomplete="name" placeholder="First name is fine">
+        </div>
+        <fieldset class="field">
+          <legend>Can you make it?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="status" id="st-yes" value="yes"><span>I'm in</span></label>
+            <label class="chip"><input type="radio" name="status" id="st-maybe" value="maybe"><span>Maybe</span></label>
+            <label class="chip"><input type="radio" name="status" id="st-no" value="no"><span>Can't make it</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Which dates work? <span class="hint">Pick all that work for you</span></legend>
+          <div class="chips" id="dates"></div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Count me in for</legend>
+          <div class="acts" id="acts"></div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Getting there</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="car" id="car-ride" value="ride"><span>I need a seat</span></label>
+            <label class="chip"><input type="radio" name="car" id="car-drive" value="drive"><span>I can drive</span></label>
+            <label class="chip"><input type="radio" name="car" id="car-meet" value="meet"><span>Meeting you there</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="note">Anything else? <span class="hint">Allergies, questions, birthday ideas</span></label>
+          <textarea id="note" maxlength="400"></textarea>
+        </div>
+        <div class="estimate">
+          <span>Your estimated cost <span class="hint" id="est-detail"></span></span>
+          <strong id="est">$0</strong>
+        </div>
+        <div class="btnrow">
+          <button type="submit" id="save">Save my RSVP</button>
+          <span class="status" id="status" role="status"></span>
+        </div>
+      </form>
+
+      <aside class="card panel tally" aria-live="polite">
+        <h3>The posse</h3>
+        <div class="counts">
+          <div class="count"><b id="c-yes">0</b><small>Riding</small></div>
+          <div class="count"><b id="c-maybe">0</b><small>Maybe</small></div>
+          <div class="count"><b id="c-no">0</b><small>Can't</small></div>
+        </div>
+        <div>
+          <div class="sub">Date votes</div>
+          <div class="bars" id="date-bars"></div>
+        </div>
+        <div>
+          <div class="sub">Activity sign-ups</div>
+          <div class="bars" id="act-bars"></div>
+        </div>
+        <ul class="guests" id="guests"></ul>
+        <p class="empty" id="empty">No RSVPs yet. Be the first: fill in the form and save.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <header>
+      <span class="eyebrow">Before you go</span>
+      <h2>Good to know</h2>
+    </header>
+    <div class="tips">
+      <div class="tip"><h3>Dress in layers</h3><p>Mid-November evenings on Lookout Mountain get cold. Bring a warm jacket for the lights, and boots for the horses.</p></div>
+      <div class="tip"><h3>Tickets go fast</h3><p>Rock City lights and the zipline are timed and sold online. We'll book once the date is set, so RSVP soon.</p></div>
+      <div class="tip"><h3>Splitting the car</h3><p>A one-day rental plus gas and parking runs about $90–140 total, split among everyone riding along.</p></div>
+      <div class="tip"><h3>Food budget</h3><p>Plan on about $40 for lunch, a snack, and dinner on the road.</p></div>
+    </div>
+  </div>
+</section>
+<button type="button" class="music" id="music" hidden aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Play the soundtrack</span></button>
+<footer><div class="wrap"><span class="brand">Happy birthday, Niah</span>Prices are estimates from October 2026 and may change. Hidden Hills, Ruby Falls, and Rock City set their own hours, so confirm before the trip.</div></footer>
+
+<script>
+(() => {
+  const DATES = [
+    { id: "nov14", label: "Sat, Nov 14" },
+    { id: "nov15", label: "Sun, Nov 15" },
+    { id: "nov21", label: "Sat, Nov 21" },
+    { id: "nov22", label: "Sun, Nov 22" }
+  ];
+  const ACTS = [
+    { id: "ride", label: "Horseback ride", cost: 62, show: "≈ $50–75" },
+    { id: "walk", label: "Downtown walk", cost: 0, show: "Free" },
+    { id: "zip", label: "Ruby Falls zipline", cost: 22, show: "$21.95" },
+    { id: "lights", label: "Rock City lights", cost: 31, show: "from $31" }
+  ];
+  const FOOD = 40, CAR_LOW = 90, CAR_HIGH = 140;
+  const $ = (id) => document.getElementById(id);
+
+  $("dates").innerHTML = DATES.map(d => `<label class="chip"><input type="checkbox" id="d-${d.id}" value="${d.id}"><span>${d.label}</span></label>`).join("");
+  $("acts").innerHTML = ACTS.map(a => `<label class="act" for="a-${a.id}"><input type="checkbox" id="a-${a.id}" value="${a.id}" checked><b>${a.label}</b><span class="price">${a.show}</span></label>`).join("");
+
+  let guests = [];
+  let myId = null;
+
+  function readForm() {
+    const status = (document.querySelector('input[name="status"]:checked') || {}).value || "";
+    const car = (document.querySelector('input[name="car"]:checked') || {}).value || "";
+    const dates = DATES.filter(d => $("d-" + d.id).checked).map(d => d.id);
+    const acts = ACTS.filter(a => $("a-" + a.id).checked).map(a => a.id);
+    return { name: $("name").value.trim().slice(0, 60), status, car, dates, acts, note: $("note").value.trim().slice(0, 400) };
+  }
+  function fillForm(r) {
+    $("name").value = r.name || "";
+    document.querySelectorAll('input[name="status"]').forEach(i => i.checked = i.value === r.status);
+    document.querySelectorAll('input[name="car"]').forEach(i => i.checked = i.value === r.car);
+    DATES.forEach(d => $("d-" + d.id).checked = (r.dates || []).includes(d.id));
+    ACTS.forEach(a => $("a-" + a.id).checked = (r.acts || []).includes(a.id));
+    $("note").value = r.note || "";
+    updateEstimate();
+  }
+
+  function riders() {
+    const n = guests.filter(g => g.status === "yes" && g.car !== "meet" && g.id !== myId).length;
+    const mine = readForm();
+    return n + (mine.status !== "no" && mine.car !== "meet" ? 1 : 0);
+  }
+  function updateEstimate() {
+    const f = readForm();
+    const acts = ACTS.filter(a => f.acts.includes(a.id)).reduce((s, a) => s + a.cost, 0);
+    let low = FOOD + acts, high = FOOD + acts, detail = "food + activities";
+    if (f.car !== "meet") {
+      const n = Math.max(riders(), 1);
+      low += CAR_LOW / n; high += CAR_HIGH / n;
+      detail = `food, activities, car split ${n} way${n === 1 ? "" : "s"}`;
+    }
+    $("est").textContent = Math.round(low) === Math.round(high) ? `$${Math.round(low)}` : `$${Math.round(low)}–${Math.round(high)}`;
+    $("est-detail").textContent = `(${detail})`;
+  }
+  $("form").addEventListener("input", updateEstimate);
+  $("form").addEventListener("change", updateEstimate);
+
+  function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+  function bars(el, items, counts, max) {
+    el.innerHTML = items.map(i => {
+      const n = counts[i.id] || 0;
+      const pct = max ? Math.round((n / max) * 100) : 0;
+      return `<div class="bar"><span>${i.label}</span><span class="track"><span class="fill" style="width:${pct}%"></span></span><span class="n">${n}</span></div>`;
+    }).join("");
+  }
+  function render() {
+    const c = { yes: 0, maybe: 0, no: 0 };
+    const dc = {}, ac = {};
+    guests.forEach(g => {
+      if (c[g.status] !== undefined) c[g.status]++;
+      if (g.status !== "no") {
+        (g.dates || []).forEach(d => dc[d] = (dc[d] || 0) + 1);
+        (g.acts || []).forEach(a => ac[a] = (ac[a] || 0) + 1);
+      }
+    });
+    $("c-yes").textContent = c.yes; $("c-maybe").textContent = c.maybe; $("c-no").textContent = c.no;
+    const going = c.yes + c.maybe;
+    bars($("date-bars"), DATES, dc, going);
+    bars($("act-bars"), ACTS, ac, going);
+    const order = { yes: 0, maybe: 1, no: 2 };
+    const sorted = guests.slice().sort((a, b) => (order[a.status] ?? 3) - (order[b.status] ?? 3) || (a.name || "").localeCompare(b.name || ""));
+    $("guests").innerHTML = sorted.map(g => {
+      const label = { yes: "Riding", maybe: "Maybe", no: "Can't" }[g.status] || "?";
+      const acts = ACTS.filter(a => (g.acts || []).includes(a.id)).map(a => a.label).join(", ");
+      const dates = DATES.filter(d => (g.dates || []).includes(d.id)).map(d => d.label.replace(/^\w+, /, "")).join(", ");
+      const car = { ride: "Needs a seat", drive: "Can drive", meet: "Meeting there" }[g.car] || "";
+      const meta = g.status === "no" ? (g.note ? esc(g.note) : "") : [acts && esc(acts), dates && "Dates: " + esc(dates), car].filter(Boolean).join(" · ") + (g.note ? `<br>“${esc(g.note)}”` : "");
+      return `<li class="guest"><span class="nm">${esc(g.name || "Someone")}${g.id === myId ? " (you)" : ""}</span><span class="pill ${esc(g.status || "")}">${label}</span>${meta ? `<span class="meta">${meta}</span>` : ""}</li>`;
+    }).join("");
+    $("empty").hidden = guests.length > 0;
+    updateEstimate();
+  }
+  render();
+
+  function setStatus(msg, kind) { const s = $("status"); s.textContent = msg; s.className = "status" + (kind ? " " + kind : ""); }
+
+  // ---- RSVP storage: your Google Sheet, through an Apps Script web app ----
+  // Paste the Web app URL from Apps Script (Deploy > New deployment) between the quotes.
+  const SCRIPT_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+  const connected = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(SCRIPT_URL);
+
+  // Each browser gets a private id + key so friends can come back and change their own answer.
+  let myKey = null;
+  (() => {
+    const make = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+    try {
+      const saved = JSON.parse(localStorage.getItem("niah-rsvp-me") || "null");
+      if (saved && saved.id && saved.key) { myId = saved.id; myKey = saved.key; }
+    } catch (_) {}
+    if (!myId) {
+      myId = make(); myKey = make();
+      try { localStorage.setItem("niah-rsvp-me", JSON.stringify({ id: myId, key: myKey })); } catch (_) {}
+    }
+  })();
+
+  let prefilled = false;
+  async function loadGuests() {
+    const res = await fetch(SCRIPT_URL, { method: "GET" });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || "load_failed");
+    guests = data.rsvps || [];
+    if (!prefilled) {
+      prefilled = true;
+      const me = guests.find(g => g.id === myId);
+      if (me) fillForm(me);
+    }
+    render();
+  }
+
+  $("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = readForm();
+    if (!f.name) { setStatus("Add your name so everyone knows who's coming.", "err"); $("name").focus(); return; }
+    if (!f.status) { setStatus("Pick whether you can make it.", "err"); return; }
+    if (!connected) { setStatus("RSVPs aren't connected yet. The organizer needs to add the Google Sheet link.", "err"); return; }
+    $("save").disabled = true; setStatus("Saving…");
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ ...f, id: myId, key: myKey })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setStatus("Saved. Come back on this same phone or browser to change it.", "ok");
+        await loadGuests().catch(() => {});
+      } else if (data.error === "not_yours") {
+        setStatus("This RSVP belongs to a different device. Clear this site's data and try again.", "err");
+      } else {
+        setStatus("That didn't save. Try again in a moment.", "err");
+      }
+    } catch (_) {
+      setStatus("That didn't save. Check your connection and try again.", "err");
+    } finally { $("save").disabled = false; }
+  });
+
+  if (!connected) {
+    $("access").textContent = "RSVPs aren't connected yet. Once the organizer links the Google Sheet, saving and the guest list will turn on.";
+    $("access").hidden = false;
+  } else {
+    loadGuests().catch(() => setStatus("Couldn't load the guest list. Reload the page to try again.", "err"));
+    setInterval(() => { if (document.visibilityState === "visible") loadGuests().catch(() => {}); }, 30000);
+    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") loadGuests().catch(() => {}); });
+  }
+
+  // ---- Soundtrack ----
+  // Paste a YouTube link (for example the official audio of "SWEET ★ HONEY ★ BUCKIIN'") or a direct .mp3 link.
+  // Browsers don't allow sound until a visitor interacts, so it starts on their first tap or click anywhere.
+  const MUSIC_URL = "";
+  (() => {
+    const btn = $("music"), label = $("music-label");
+    if (!MUSIC_URL) return;
+    btn.hidden = false;
+    const yt = MUSIC_URL.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+    let audio = null, frame = null, playing = false, started = false;
+    const show = () => { btn.classList.toggle("playing", playing); btn.setAttribute("aria-pressed", String(playing)); label.textContent = playing ? "Pause the music" : "Play the soundtrack"; };
+    const ytCmd = (func) => { if (frame && frame.contentWindow) frame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args: [] }), "*"); };
+    function start() {
+      started = true;
+      if (yt) {
+        frame = document.createElement("iframe");
+        frame.className = "music-frame"; frame.title = "Soundtrack"; frame.allow = "autoplay; encrypted-media";
+        frame.src = `https://www.youtube.com/embed/${yt[1]}?autoplay=1&loop=1&playlist=${yt[1]}&enablejsapi=1&playsinline=1`;
+        document.body.appendChild(frame);
+        playing = true; show();
+      } else {
+        audio = new Audio(MUSIC_URL); audio.loop = true; audio.volume = .6;
+        audio.play().then(() => { playing = true; show(); }).catch(() => { playing = false; show(); });
+      }
+    }
+    function toggle() {
+      if (!started) return start();
+      playing = !playing;
+      if (yt) ytCmd(playing ? "playVideo" : "pauseVideo");
+      else if (audio) { playing ? audio.play().catch(() => {}) : audio.pause(); }
+      show();
+    }
+    btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
+    const firstTouch = (e) => {
+      document.removeEventListener("pointerdown", firstTouch, true);
+      document.removeEventListener("keydown", firstTouch, true);
+      if (!started && !btn.contains(e.target)) start();
+    };
+    document.addEventListener("pointerdown", firstTouch, true);
+    document.addEventListener("keydown", firstTouch, true);
+  })();
+
+  // Purse checklist: remembered on this device only
+  (() => {
+    const boxes = Array.from(document.querySelectorAll("#purse input[type=checkbox]"));
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem("niah-purse") || "{}") || {}; } catch (_) { saved = {}; }
+    const count = () => { $("bag-count").textContent = `${boxes.filter(b => b.checked).length} of ${boxes.length} packed`; };
+    boxes.forEach(b => { b.checked = !!saved[b.id]; b.addEventListener("change", () => { saved[b.id] = b.checked; try { localStorage.setItem("niah-purse", JSON.stringify(saved)); } catch (_) {} count(); }); });
+    count();
+  })();
+
+  // Dusk over Lookout Mountain: ridgelines and drifting fall leaves
+  const cv = $("sky"), ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, leaves = [], ridges = [];
+  const LEAF = ["#e6a93b", "#d4581f", "#a8321c", "#7d1f22", "#c98a2e"];
+  function ridge(base, amp, seed) {
+    const pts = [];
+    for (let x = 0; x <= W + 20; x += 20) {
+      const t = x / W;
+      pts.push([x, base - amp * (0.55 * Math.sin(t * 5 + seed) + 0.3 * Math.sin(t * 13 + seed * 2) + 0.15 * Math.sin(t * 29 + seed))]);
+    }
+    return pts;
+  }
+  function layout() {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+    W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ridges = [
+      { pts: ridge(H - 70, 26, 1.3), color: "rgba(90,30,22,.55)" },
+      { pts: ridge(H - 40, 22, 4.1), color: "rgba(52,18,14,.8)" },
+      { pts: ridge(H - 12, 14, 2.2), color: "#1a110c" }
+    ];
+    const n = Math.round(Math.min(40, W / 28));
+    leaves = Array.from({ length: n }, () => ({
+      x: Math.random() * W, y: Math.random() * H, s: 5 + Math.random() * 7,
+      vy: .25 + Math.random() * .5, vx: -.2 + Math.random() * .5, r: Math.random() * 6.28, vr: (Math.random() - .5) * .03,
+      c: LEAF[Math.floor(Math.random() * LEAF.length)], p: Math.random() * 6.28
+    }));
+  }
+  function leaf(l) {
+    ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.r); ctx.fillStyle = l.c; ctx.globalAlpha = .85;
+    ctx.beginPath(); ctx.moveTo(0, -l.s);
+    ctx.quadraticCurveTo(l.s * .9, -l.s * .2, 0, l.s);
+    ctx.quadraticCurveTo(-l.s * .9, -l.s * .2, 0, -l.s); ctx.fill();
+    ctx.strokeStyle = "rgba(40,12,8,.5)"; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -l.s); ctx.lineTo(0, l.s); ctx.stroke();
+    ctx.restore();
+  }
+  function frame(t) {
+    ctx.clearRect(0, 0, W, H);
+    // sun
+    const g = ctx.createRadialGradient(W * .78, H - 70, 0, W * .78, H - 70, 120);
+    g.addColorStop(0, "rgba(255,214,140,.9)"); g.addColorStop(.25, "rgba(255,180,90,.5)"); g.addColorStop(1, "rgba(255,150,60,0)");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ridges.forEach(rd => {
+      ctx.fillStyle = rd.color; ctx.beginPath(); ctx.moveTo(0, H);
+      rd.pts.forEach(([x, y]) => ctx.lineTo(x, y)); ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+    });
+    leaves.forEach(l => {
+      if (!still) {
+        l.y += l.vy; l.x += l.vx + Math.sin(t / 1200 + l.p) * .35; l.r += l.vr;
+        if (l.y > H + 12) { l.y = -12; l.x = Math.random() * W; }
+        if (l.x > W + 12) l.x = -12; if (l.x < -12) l.x = W + 12;
+      }
+      leaf(l);
+    });
+    if (!still) requestAnimationFrame(frame);
+  }
+  layout();
+  addEventListener("resize", () => { layout(); if (still) frame(0); });
+  still ? frame(0) : requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
