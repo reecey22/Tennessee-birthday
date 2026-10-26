@@ -234,6 +234,25 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
 @media (prefers-reduced-motion: reduce) { .bar .fill, .look { transition: none; } .look:hover { transform: none; } }
 /* ---- Message Niah ---- */
 .msg-card { max-width: 640px; }
+.note-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 24px; align-items: start; max-width: 1000px; }
+.note-row .msg-card { max-width: none; }
+@media (max-width: 820px) { .note-row { grid-template-columns: 1fr; } }
+.gift { padding: 26px 24px 22px; display: grid; gap: 14px; min-width: 0; }
+.gift h3 { font-family: var(--display); font-size: 22px; color: var(--gold); }
+.gift p { margin: 0; color: var(--muted); }
+.pay { display: grid; gap: 10px; }
+.pay-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; background: var(--raised); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.pay-app { grid-column: 1 / -1; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.pay-handle { font-family: var(--mono); font-weight: 700; font-size: 20px; color: var(--ink); user-select: all; overflow-wrap: anywhere; min-width: 0; }
+.pay-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pay-copy, .pay-open { font-family: var(--body); font-size: 12px; font-weight: 800; letter-spacing: .06em; border-radius: 999px; padding: 7px 12px; cursor: pointer; text-decoration: none; box-shadow: none; white-space: nowrap; }
+.pay-copy { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.pay-copy:hover { border-color: var(--gold); }
+.pay-open { background: var(--gold); color: #2a1406; border: 1px solid var(--gold); }
+.pay-open:hover { background: #f2bb52; }
+.pay-copy:focus-visible, .pay-open:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pay-note { font-size: 13px; }
+@media (max-width: 480px) { .pay-row { grid-template-columns: 1fr; } .pay-actions { justify-content: flex-start; } }
 .msg-nudge { margin: 0 0 16px; max-width: 640px; padding: 12px 16px; border-left: 3px solid var(--rust); background: var(--surface); border-radius: 6px; font-weight: 600; color: var(--ink); }
 #message { scroll-margin-top: 16px; }
 .msg-card .row { display: grid; gap: 8px; }
@@ -438,20 +457,45 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       <p class="lede">Questions, birthday wishes, or "save me a seat." It goes straight to Niah's email, and nobody else sees it.</p>
     </header>
     <p class="msg-nudge" id="msg-nudge" role="status" hidden></p>
-    <form class="card poster msg-card" id="msg-form" novalidate>
-      <div class="field">
-        <label for="msg-name">Your name</label>
-        <input type="text" id="msg-name" maxlength="60" autocomplete="name" placeholder="So she knows who it's from">
+    <div class="note-row">
+      <form class="card poster msg-card" id="msg-form" novalidate>
+        <div class="field">
+          <label for="msg-name">Your name</label>
+          <input type="text" id="msg-name" maxlength="60" autocomplete="name" placeholder="So she knows who it's from">
+        </div>
+        <div class="field">
+          <label for="msg-text">Message</label>
+          <textarea id="msg-text" maxlength="500" placeholder="Happy birthday, cowgirl!"></textarea>
+        </div>
+        <div class="btnrow">
+          <button type="submit" id="msg-send">Send to Niah</button>
+          <span class="status" id="msg-status" role="status"></span>
+        </div>
+      </form>
+    <aside class="panel gift" aria-labelledby="gift-title">
+      <h3 id="gift-title">Send a birthday treat</h3>
+      <p>Want to spoil the birthday girl? Niah's on Cash App and Venmo.</p>
+      <div class="pay">
+        <div class="pay-row">
+          <span class="pay-app">Cash App</span>
+          <span class="pay-handle" id="pay-cash">$9niah9</span>
+          <div class="pay-actions">
+            <button type="button" class="pay-copy" data-copy="$9niah9" aria-label="Copy Cash App tag">Copy</button>
+            <a class="pay-open" href="https://cash.app/$9niah9" target="_blank" rel="noopener">Open Cash App</a>
+          </div>
+        </div>
+        <div class="pay-row">
+          <span class="pay-app">Venmo</span>
+          <span class="pay-handle" id="pay-venmo">@niah2k20</span>
+          <div class="pay-actions">
+            <button type="button" class="pay-copy" data-copy="@niah2k20" aria-label="Copy Venmo username">Copy</button>
+            <a class="pay-open" href="https://venmo.com/u/niah2k20" target="_blank" rel="noopener">Open Venmo</a>
+          </div>
+        </div>
       </div>
-      <div class="field">
-        <label for="msg-text">Message</label>
-        <textarea id="msg-text" maxlength="500" placeholder="Happy birthday, cowgirl!"></textarea>
-      </div>
-      <div class="btnrow">
-        <button type="submit" id="msg-send">Send to Niah</button>
-        <span class="status" id="msg-status" role="status"></span>
-      </div>
-    </form>
+      <p class="pay-note">Totally optional. Coming along is the best gift. Double-check the name before you send.</p>
+    </aside>
+    </div>
   </div>
 </section>
 
@@ -806,6 +850,21 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       finally { send.disabled = false; }
     });
   })();
+
+  // Copy buttons for the birthday treat handles
+  document.querySelectorAll(".pay-copy").forEach((b) => {
+    b.addEventListener("click", async () => {
+      const text = b.dataset.copy, label = b.textContent;
+      try { await navigator.clipboard.writeText(text); b.textContent = "Copied"; }
+      catch (_) {
+        const el = b.closest(".pay-row").querySelector(".pay-handle");
+        const r = document.createRange(); r.selectNodeContents(el);
+        const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        b.textContent = "Selected";
+      }
+      setTimeout(() => { b.textContent = label; }, 1600);
+    });
+  });
 
   // Purse checklist: remembered on this device only
   (() => {
