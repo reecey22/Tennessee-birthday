@@ -192,9 +192,72 @@ button:focus-visible { outline: 3px solid #d4581f; outline-offset: 2px; }
 footer { padding-block: 48px; color: var(--muted); font-size: 13px; }
 footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold); display: block; margin-bottom: 6px; }
 @media (prefers-reduced-motion: reduce) { .bar .fill, .look { transition: none; } .look:hover { transform: none; } }
+/* ---- Standoff intro ---- */
+.intro { position: fixed; inset: 0; z-index: 100; overflow: hidden; background: linear-gradient(180deg, #2a0f14 0%, #6e2417 40%, #c2501c 72%, #e6913b 100%); cursor: pointer; transition: opacity .6s ease; }
+.intro.out { opacity: 0; pointer-events: none; }
+.intro .sun { position: absolute; left: 50%; bottom: 20%; width: min(46vw, 360px); aspect-ratio: 1; max-width: 100%; transform: translate(-50%, 30%); border-radius: 50%; background: radial-gradient(circle, rgba(255,226,160,.95) 0 34%, rgba(255,190,110,.5) 52%, rgba(255,150,60,0) 70%); }
+.intro .land { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 38%; }
+.intro .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 20%; background: #1a110c; }
+.intro .duelist { position: absolute; bottom: calc(20% - 2px); height: min(42vh, 360px); width: auto; transition: left 2.1s cubic-bezier(.3,.6,.4,1), right 2.1s cubic-bezier(.3,.6,.4,1); }
+.intro .duelist.l { left: -30%; }
+.intro .duelist.r { right: -30%; transform: scaleX(-1); }
+.intro.walk .duelist.l { left: max(6%, calc(50% - 34vh)); }
+.intro.walk .duelist.r { right: max(6%, calc(50% - 34vh)); }
+.intro.walk .duelist .bob { animation: bob .42s ease-in-out 5; transform-box: view-box; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+.intro .arm { transform-box: view-box; transform-origin: 39px 33px; transition: transform .18s cubic-bezier(.2,1.6,.4,1); }
+.intro .popper { opacity: 0; transition: opacity .1s; }
+.intro.draw .arm { transform: rotate(-112deg); }
+.intro.draw .popper { opacity: 1; }
+.intro .tumbleweed { position: absolute; bottom: calc(20% - 4px); left: 110%; width: min(9vh, 70px); height: auto; }
+.intro.roll .tumbleweed { animation: roll 2.4s linear forwards; }
+@keyframes roll {
+  0% { left: 110%; transform: translateY(0) rotate(0); }
+  20% { transform: translateY(-26px) rotate(-200deg); }
+  35% { transform: translateY(0) rotate(-340deg); }
+  55% { transform: translateY(-16px) rotate(-560deg); }
+  70% { transform: translateY(0) rotate(-720deg); }
+  100% { left: -20%; transform: translateY(0) rotate(-1080deg); }
+}
+.intro canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.intro .flash { position: absolute; inset: 0; background: #fff3df; opacity: 0; pointer-events: none; }
+.intro.draw .flash { animation: flash .5s ease-out; }
+@keyframes flash { 0% { opacity: .85; } 100% { opacity: 0; } }
+.intro .bar { position: absolute; left: 0; right: 0; height: 11vh; background: #000; z-index: 3; transition: transform .7s ease; }
+.intro .bar.top { top: 0; transform: translateY(-100%); }
+.intro .bar.bottom { bottom: 0; transform: translateY(100%); }
+.intro.on .bar { transform: translateY(0); }
+.intro .cap { position: absolute; z-index: 4; left: 50%; top: 18%; transform: translateX(-50%); width: min(90%, 760px); text-align: center; font-family: var(--display); color: #fff3df; font-size: clamp(20px, 3.6vw, 34px); line-height: 1.2; text-shadow: 3px 3px 0 #3a120e; opacity: 0; transition: opacity .35s; }
+.intro .cap.show { opacity: 1; }
+.intro .cap.big { font-size: clamp(64px, 14vw, 150px); color: var(--gold); top: 14%; letter-spacing: .04em; }
+.intro .title { position: absolute; z-index: 4; inset: 0; display: grid; place-content: center; text-align: center; gap: 6px; opacity: 0; transform: scale(.94); transition: opacity .5s, transform .8s cubic-bezier(.2,.8,.2,1); pointer-events: none; padding-bottom: 14vh; }
+.intro .title b { font-family: var(--display); font-weight: 400; font-size: clamp(42px, 9vw, 96px); color: #fff3df; text-shadow: 4px 4px 0 #3a120e; line-height: 1; }
+.intro .title span { font-family: var(--script); font-size: clamp(24px, 4.4vw, 44px); color: var(--gold); text-shadow: 3px 3px 0 #3a120e; }
+.intro.titled .title { opacity: 1; transform: scale(1); }
+.intro.titled .cap { opacity: 0; }
+.intro .skip { position: absolute; z-index: 5; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(11vh + 14px); font-family: var(--body); font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff3df; background: rgba(0,0,0,.45); border: 1px solid rgba(255,243,223,.5); border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+.intro .skip:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .intro { display: none; } }
 </style>
 </head>
 <body>
+<div class="intro" id="intro" role="dialog" aria-label="Intro animation">
+  <div class="sun"></div>
+  <svg class="land" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 300 L0 150 C120 110 220 160 330 120 C440 80 520 140 640 110 C760 80 860 130 1000 100 L1000 300 Z" fill="rgba(90,30,22,.6)"/>
+    <path d="M0 300 L0 200 C140 170 260 210 400 180 C540 150 660 200 800 175 C880 160 940 175 1000 165 L1000 300 Z" fill="rgba(52,18,14,.85)"/>
+  </svg>
+  <div class="ground"></div>
+  <svg class="duelist l" viewBox="0 0 60 152" aria-hidden="true"><g class="bob" fill="#1a110c" stroke="#1a110c" stroke-linecap="round" stroke-linejoin="round"><path d="M24 18 C20 28 21 38 24 46 L36 46 C39 38 40 28 36 18 Z"/><circle cx="30" cy="20" r="6"/><ellipse cx="30" cy="14" rx="15" ry="2.4" transform="rotate(-6 30 14)"/><path d="M22 14 C22 5 26 2.5 30 5 C34 2.5 38 5 38 14 Z" transform="rotate(-6 30 14)"/><path d="M28 24 L32 24 L32 31 L28 31 Z"/><path d="M21 31 Q30 28 39 31 C42 34 43 40 40 45 C37 48 35 50 35 53 C38 58 46 62 46 71 C46 83 43 95 40 106 C41 116 42 124 40 134 L34 134 C33 122 32 114 33 106 C33 94 32 82 30.5 75 L29.5 75 C28 82 27 94 27 106 C28 114 27 122 26 134 L20 134 C18 124 19 116 20 106 C17 95 14 83 14 71 C14 62 22 58 25 53 C25 50 23 48 20 45 C17 40 18 34 21 31 Z"/><path d="M19 130 L27 130 L27.5 147 L34 150 L17 150 Z"/><path d="M33.5 130 L40.5 130 L41 146 L48 150 L33 150 Z"/><polyline points="21,33 11,47 16,61" fill="none" stroke-width="4.2"/><rect x="44" y="60" width="7" height="9" rx="1.5"/><g class="arm"><polyline points="39,33 46,46 48,61" fill="none" stroke-width="3.8"/><path class="popper" d="M45 60 L51 60 L49 72 L47 72 Z" fill="#e6a93b" stroke="none"/></g></g></svg>
+  <svg class="duelist r" viewBox="0 0 60 152" aria-hidden="true"><g class="bob" fill="#1a110c" stroke="#1a110c" stroke-linecap="round" stroke-linejoin="round"><path d="M24 18 C20 28 21 38 24 46 L36 46 C39 38 40 28 36 18 Z"/><circle cx="30" cy="20" r="6"/><ellipse cx="30" cy="14" rx="15" ry="2.4" transform="rotate(-6 30 14)"/><path d="M22 14 C22 5 26 2.5 30 5 C34 2.5 38 5 38 14 Z" transform="rotate(-6 30 14)"/><path d="M28 24 L32 24 L32 31 L28 31 Z"/><path d="M21 31 Q30 28 39 31 C42 34 43 40 40 45 C37 48 35 50 35 53 C38 58 46 62 46 71 C46 83 43 95 40 106 C41 116 42 124 40 134 L34 134 C33 122 32 114 33 106 C33 94 32 82 30.5 75 L29.5 75 C28 82 27 94 27 106 C28 114 27 122 26 134 L20 134 C18 124 19 116 20 106 C17 95 14 83 14 71 C14 62 22 58 25 53 C25 50 23 48 20 45 C17 40 18 34 21 31 Z"/><path d="M19 130 L27 130 L27.5 147 L34 150 L17 150 Z"/><path d="M33.5 130 L40.5 130 L41 146 L48 150 L33 150 Z"/><polyline points="21,33 11,47 16,61" fill="none" stroke-width="4.2"/><rect x="44" y="60" width="7" height="9" rx="1.5"/><g class="arm"><polyline points="39,33 46,46 48,61" fill="none" stroke-width="3.8"/><path class="popper" d="M45 60 L51 60 L49 72 L47 72 Z" fill="#e6a93b" stroke="none"/></g></g></svg>
+  <svg class="tumbleweed" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#6b4423" stroke-width="3" stroke-linecap="round"><circle cx="50" cy="50" r="40"/><path d="M14 40 C34 20 70 22 86 46 M18 64 C40 80 70 78 84 58 M30 18 C24 44 36 76 58 88 M70 14 C80 40 70 70 44 86 M20 50 C44 40 62 54 84 44 M40 12 C56 30 52 62 30 82"/></g></svg>
+  <canvas id="intro-confetti" aria-hidden="true"></canvas>
+  <div class="flash"></div>
+  <div class="cap" id="intro-cap" aria-live="polite"></div>
+  <div class="title" aria-hidden="true"><b>Niah's Day Out</b><span>Ladies, we ride at dawn</span></div>
+  <div class="bar top"></div><div class="bar bottom"></div>
+  <button type="button" class="skip" id="intro-skip">Skip intro</button>
+</div>
 <div class="hero">
   <canvas id="sky" aria-hidden="true"></canvas>
   <svg class="posse" viewBox="0 0 320 160" aria-hidden="true">
@@ -713,5 +776,68 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
 })();
 </script>
 
+<script>
+// ---- Standoff intro: plays on each page load; tap anywhere or "Skip intro" to jump ahead ----
+(() => {
+  const intro = document.getElementById("intro");
+  if (!intro) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const root = document.documentElement;
+  const cap = document.getElementById("intro-cap");
+  const timers = [];
+  let done = false;
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  function finish() {
+    if (done) return; done = true;
+    timers.forEach(clearTimeout);
+    intro.classList.add("out");
+    root.style.overflow = "";
+    setTimeout(() => intro.remove(), 650);
+  }
+  if (reduce) { intro.remove(); return; }
+  root.style.overflow = "hidden";
+  intro.addEventListener("click", finish);
+  document.getElementById("intro-skip").addEventListener("click", (e) => { e.stopPropagation(); finish(); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape") finish(); });
+
+  const say = (text, big) => { cap.classList.remove("show"); setTimeout(() => { cap.textContent = text; cap.classList.toggle("big", !!big); cap.classList.add("show"); }, 180); };
+
+  // Confetti from both party poppers
+  const cv = document.getElementById("intro-confetti"), ctx = cv.getContext("2d");
+  let bits = [];
+  const COLORS = ["#e6a93b", "#d4581f", "#7d1f22", "#f3e4cc", "#e48aa0", "#fff3df"];
+  function burst() {
+    const dpr = Math.min(devicePixelRatio || 1, 2), r = intro.getBoundingClientRect();
+    cv.width = r.width * dpr; cv.height = r.height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    document.querySelectorAll(".intro .popper").forEach((p, i) => {
+      const b = p.getBoundingClientRect(), dir = i === 0 ? 1 : -1;
+      for (let k = 0; k < 90; k++) {
+        const ang = (-Math.PI / 2) + dir * (Math.random() * 1.1 + .1), sp = 6 + Math.random() * 9;
+        bits.push({ x: b.left + b.width / 2, y: b.top + b.height / 2, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp, w: 4 + Math.random() * 6, h: 6 + Math.random() * 8, r: Math.random() * 6.28, vr: (Math.random() - .5) * .4, c: COLORS[k % COLORS.length], life: 0 });
+      }
+    });
+    requestAnimationFrame(tick);
+  }
+  function tick() {
+    if (done) return;
+    const r = intro.getBoundingClientRect();
+    ctx.clearRect(0, 0, r.width, r.height);
+    bits.forEach(b => { b.vy += .28; b.vx *= .985; b.x += b.vx; b.y += b.vy; b.r += b.vr; b.life++;
+      ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r); ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h * Math.abs(Math.cos(b.life / 6))); ctx.restore(); });
+    bits = bits.filter(b => b.y < r.height + 40);
+    if (bits.length) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(() => intro.classList.add("on"));
+  at(350, () => intro.classList.add("walk"));
+  at(900, () => say("Chattanooga. 7:30 in the morning."));
+  at(2500, () => intro.classList.add("roll"));
+  at(2700, () => say("This town ain't big enough…"));
+  at(4000, () => say("…for a birthday without the whole posse."));
+  at(5400, () => { say("DRAW!", true); intro.classList.add("draw"); burst(); });
+  at(6500, () => intro.classList.add("titled"));
+  at(8200, finish);
+})();
+</script>
 </body>
 </html>
