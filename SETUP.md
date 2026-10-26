@@ -43,14 +43,12 @@ Files in this folder:
 
 ## Step 5 (optional): Change the soundtrack
 
-The page comes with its own original western tune, so you don't need to do anything. When a visitor taps **Ride in** on the opening screen, the music starts and the cowgirls ride across. A gold **Play/Pause the music** button stays in the corner.
+The page comes with its own original western tune, so you don't need to do anything. Browsers never play sound until a visitor interacts, so the music starts on their first tap, click, or key press anywhere on the page, or when they press **Play the western music** in the header. A gold **Play/Pause the music** button stays in the corner.
 
 To use a different song instead, find it on YouTube, copy the link, and paste it between the quotes in `index.html`:
 ```js
 const MUSIC_URL = "https://www.youtube.com/watch?v=...";
 ```
-Browsers never play sound before a visitor taps, which is why the intro starts with a button.
-
 ## Step 6: Put the page online
 
 **Netlify Drop (easiest)**
