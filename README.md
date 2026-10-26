@@ -1,5 +1,7 @@
 # Niah's Day Out in Tennessee
 
+View site here: reecey22.github.io/Tennessee-birthday
+
 A birthday day-trip page for Chattanooga: the schedule, a date vote, activity opt-ins, outfit ideas, a purse checklist, and a live RSVP guest list.
 
 | File | What it is |
