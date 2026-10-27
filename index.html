@@ -4,6 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Niah's Day Out in Tennessee</title>
+<meta name="description" content="Niah's birthday day trip to Chattanooga: horses, a zipline, Rock City lights, and a mechanical bull. Ladies, we ride at dawn. RSVP inside.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://reecey22.github.io/Tennessee-birthday/">
+<meta property="og:title" content="Niah's Day Out in Tennessee">
+<meta property="og:description" content="Ladies, we ride at dawn. Horses, Rock City lights, and a mechanical bull. RSVP inside.">
+<meta property="og:image" content="https://reecey22.github.io/Tennessee-birthday/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Three cowgirls on horseback at sunset under the title Niah's Day Out in Tennessee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Niah's Day Out in Tennessee">
+<meta name="twitter:description" content="Ladies, we ride at dawn. RSVP inside.">
+<meta name="twitter:image" content="https://reecey22.github.io/Tennessee-birthday/preview.png">
+<meta name="theme-color" content="#2a0f14">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rye&family=Sancreek&family=Libre+Franklin:wght@400;500;600;700;800&family=Courier+Prime:wght@400;700&display=swap">
 <style>
@@ -131,6 +147,14 @@ section h2 { font-size: clamp(30px, 5vw, 44px); color: var(--ink); }
 .stop p { margin: 4px 0 0; color: var(--muted); max-width: 60ch; }
 .price { font-family: var(--mono); font-weight: 700; font-size: 14px; color: var(--gold); white-space: nowrap; }
 .tag { font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--bg); background: var(--rust); border-radius: 3px; padding: 2px 7px; }
+.stop-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.stop-link { font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--raised); }
+.stop-link:hover { border-color: var(--gold); }
+.stop-link.main { background: var(--gold); border-color: var(--gold); color: #2a1406; }
+.stop-link.main:hover { background: #f2bb52; }
+.stop-link::after { content: " ↗"; opacity: .7; }
+.stop-link[href^="tel:"]::after { content: ""; }
+.stop-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .note { margin: 16px 0 0; font-size: 14px; color: var(--muted); border-left: 3px solid var(--rust); padding-left: 12px; max-width: 62ch; }
 
 /* Outfits */
@@ -295,14 +319,14 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     </header>
     <div class="panel route-panel">
       <ol class="route">
-        <li class="stop"><time>7:30 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride out of Atlanta</h3><p>Carpool up I-75 North. About 2 hours and 15 minutes with traffic.</p></div></li>
-        <li class="stop opt"><time>10:00 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Horseback trail ride <span class="price">≈ $50–75</span> <span class="tag">Optional</span></h3><p>Hidden Hills Farm &amp; Saddle Club in McDonald, TN, 25 minutes east of downtown. A guided ride on wooded trails, beginner friendly.</p></div></li>
-        <li class="stop"><time>12:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Lunch downtown</h3><p>Southside or downtown. Pay your own way.</p></div></li>
-        <li class="stop"><time>1:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Downtown walk <span class="price">Free</span></h3><p>Walnut Street pedestrian bridge to Coolidge Park and the North Shore shops, back along the Riverwalk to the Bluff View Art District for coffee.</p></div></li>
-        <li class="stop opt"><time>3:45 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ruby Falls High Point ZIP <span class="price">$21.95</span> <span class="tag">Optional</span></h3><p>Round-trip zipline plus the 40-foot climbing wall, on Lookout Mountain.</p></div></li>
-        <li class="stop opt"><time>5:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Rock City: Enchanted Garden of Lights <span class="price">from $31</span> <span class="tag">Optional</span></h3><p>Millions of lights on the rock trails, hot cocoa, and the "See Seven States" overlook at night. Timed tickets, sold online only.</p></div></li>
-        <li class="stop opt"><time>8:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Whiskey Cowgirl: dinner + mechanical bull <span class="price">Pay as you go</span> <span class="tag">Optional</span></h3><p>A Southside country bar at 1819 Broad St, about 15 minutes down the mountain, with a mechanical bull, live music, and line dancing. Bring your ID. The bull runs in the evening, so we'll confirm the time before the trip.</p></div></li>
-        <li class="stop"><time>9:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride home</h3><p>Back in Atlanta around 11:45 pm. Skipping the bull? The early car can leave Rock City at 7:30 pm and be home around 9:45.</p></div></li>
+        <li class="stop"><time>7:30 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride out of Atlanta</h3><p>Carpool up I-75 North. About 2 hours and 15 minutes with traffic.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/dir/?api=1&origin=Atlanta%2C+GA&destination=Chattanooga%2C+TN&travelmode=driving" target="_blank" rel="noopener">Route from Atlanta</a></div></div></li>
+        <li class="stop opt"><time>10:00 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Horseback trail ride <span class="price">≈ $50–75</span> <span class="tag">Optional</span></h3><p>Hidden Hills Farm &amp; Saddle Club in McDonald, TN, 25 minutes east of downtown. A guided ride on wooded trails, beginner friendly.</p><div class="stop-links"><a class="stop-link main" href="https://www.hiddenhillsfarm.com/" target="_blank" rel="noopener">Hidden Hills website</a><a class="stop-link" href="tel:+14234883993">Call to book: 423-488-3993</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Hidden+Hills+Farm+%26+Saddle+Club%2C+1106+Pine+Hill+Rd%2C+McDonald%2C+TN+37353" target="_blank" rel="noopener">Directions</a></div></div></li>
+        <li class="stop"><time>12:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Lunch downtown</h3><p>Southside or downtown. Pay your own way.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=restaurants+Southside+Chattanooga+TN" target="_blank" rel="noopener">Southside spots on the map</a></div></div></li>
+        <li class="stop"><time>1:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Downtown walk <span class="price">Free</span></h3><p>Walnut Street pedestrian bridge to Coolidge Park and the North Shore shops, back along the Riverwalk to the Bluff View Art District for coffee.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Walnut+Street+Bridge%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Walnut Street Bridge</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Bluff+View+Art+District%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Bluff View Art District</a></div></div></li>
+        <li class="stop opt"><time>3:45 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ruby Falls High Point ZIP <span class="price">$21.95</span> <span class="tag">Optional</span></h3><p>Round-trip zipline plus the 40-foot climbing wall, on Lookout Mountain.</p><div class="stop-links"><a class="stop-link main" href="https://rubyfalls.com/ticketing" target="_blank" rel="noopener">Get zipline tickets</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Ruby+Falls%2C+1720+S+Scenic+Hwy%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Directions</a></div></div></li>
+        <li class="stop opt"><time>5:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Rock City: Enchanted Garden of Lights <span class="price">from $31</span> <span class="tag">Optional</span></h3><p>Millions of lights on the rock trails, hot cocoa, and the "See Seven States" overlook at night. Timed tickets, sold online only.</p><div class="stop-links"><a class="stop-link main" href="https://www.seerockcity.com/enchanted-garden-of-lights" target="_blank" rel="noopener">Get Rock City tickets</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Rock+City%2C+1400+Patten+Rd%2C+Lookout+Mountain%2C+GA" target="_blank" rel="noopener">Directions</a></div></div></li>
+        <li class="stop opt"><time>8:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Whiskey Cowgirl: dinner + mechanical bull <span class="price">Pay as you go</span> <span class="tag">Optional</span></h3><p>A Southside country bar at 1819 Broad St, about 15 minutes down the mountain, with a mechanical bull, live music, and line dancing. Bring your ID. The bull runs in the evening, so we'll confirm the time before the trip.</p><div class="stop-links"><a class="stop-link" href="tel:+14236547665">Call: 423-654-7665</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Whiskey+Cowgirl%2C+1819+Broad+St%2C+Chattanooga%2C+TN+37408" target="_blank" rel="noopener">Directions</a></div></div></li>
+        <li class="stop"><time>9:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride home</h3><p>Back in Atlanta around 11:45 pm. Skipping the bull? The early car can leave Rock City at 7:30 pm and be home around 9:45.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/dir/?api=1&origin=Chattanooga%2C+TN&destination=Atlanta%2C+GA&travelmode=driving" target="_blank" rel="noopener">Route home</a></div></div></li>
       </ol>
     </div>
     <p class="note">Tubing is off the list: river tubing near Chattanooga is a summer thing, and the nearest snow tubing is about 3 hours away in Gatlinburg.</p>
