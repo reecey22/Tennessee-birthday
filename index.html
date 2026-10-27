@@ -229,6 +229,16 @@ section h2 { font-size: clamp(30px, 5vw, 44px); color: var(--ink); }
 .act b { font-weight: 700; }
 .act .price { color: #8a3a12; }
 .estimate { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; border-top: 2px dashed #b88a5a; padding-top: 16px; font-weight: 700; }
+.edit-link { display: grid; gap: 8px; background: #f6ead3; border: 2px dashed #b88a5a; border-radius: 6px; padding: 14px 16px; }
+.edit-link b { font-family: var(--display); font-weight: 400; font-size: 20px; color: #6e1c1c; }
+.edit-link p { margin: 0; font-size: 13px; color: #6b4a2e; }
+.edit-link input { width: 100%; font: 13px var(--mono); color: #2b1a0e; background: #fff; border: 1px solid #c9a477; border-radius: 4px; padding: 8px 10px; }
+.edit-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.edit-actions button, .edit-actions a { font-family: var(--body); font-size: 13px; font-weight: 800; border-radius: 999px; padding: 8px 14px; text-decoration: none; box-shadow: none; cursor: pointer; }
+.edit-actions button { background: #6e1c1c; color: #fff3df; border: 0; }
+.edit-actions a { background: #fff; color: #6e1c1c; border: 1px solid #c9a477; }
+.edit-actions a:hover { border-color: #6e1c1c; }
+.edit-actions :focus-visible { outline: 2px solid #d4581f; outline-offset: 2px; }
 .est-note { margin: -12px 0 0; font-size: 13px; line-height: 1.5; color: #7a5636; max-width: 60ch; }
 .estimate strong { font-family: var(--display); font-weight: 400; font-size: 30px; color: #6e1c1c; }
 .btnrow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -441,7 +451,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     <header>
       <span class="eyebrow">RSVP</span>
       <h2>Join the posse</h2>
-      <p class="lede">Your answer saves to the group guest list. To change it later, come back on the same phone or browser. Costs are estimates for planning, not final prices.</p>
+      <p class="lede">Your answer saves to the group guest list. After you save, you'll get a personal link to change it from any phone. Costs are estimates for planning, not final prices.</p>
     </header>
     <div class="split">
       <form class="card poster" id="form" novalidate>
@@ -487,6 +497,16 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
         <div class="btnrow">
           <button type="submit" id="save">Save my RSVP</button>
           <span class="status" id="status" role="status"></span>
+        </div>
+        <div class="edit-link" id="edit-link" hidden>
+          <b>Your personal RSVP link</b>
+          <p>Open it on any phone or computer to change your answer. Don't share it: anyone with it can edit your RSVP.</p>
+          <input type="text" id="edit-url" readonly aria-label="Your personal RSVP link">
+          <div class="edit-actions">
+            <button type="button" id="edit-copy">Copy link</button>
+            <a id="edit-sms" href="#">Text it to myself</a>
+            <a id="edit-mail" href="#">Email it to myself</a>
+          </div>
         </div>
       </form>
 
@@ -675,9 +695,17 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
   const connected = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(SCRIPT_URL);
 
   // Each browser gets a private id + key so friends can come back and change their own answer.
-  let myKey = null;
+  let myKey = null, cameFromLink = false;
   (() => {
     const make = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+    // Opening someone's personal RSVP link on any device loads their RSVP here
+    const m = location.hash.match(/^#edit=([\w-]{8,64})\.([\w-]{8,64})$/);
+    if (m) {
+      myId = m[1]; myKey = m[2]; cameFromLink = true;
+      try { localStorage.setItem("niah-rsvp-me", JSON.stringify({ id: myId, key: myKey })); } catch (_) {}
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (_) {}
+      return;
+    }
     try {
       const saved = JSON.parse(localStorage.getItem("niah-rsvp-me") || "null");
       if (saved && saved.id && saved.key) { myId = saved.id; myKey = saved.key; }
@@ -688,6 +716,23 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     }
   })();
 
+  // Personal RSVP link: works on any device
+  function editUrl() { return location.origin + location.pathname + "#edit=" + myId + "." + myKey; }
+  function showEditLink() {
+    const url = editUrl(), body = `My RSVP for Niah's Day Out (tap to change it): ${url}`;
+    $("edit-url").value = url;
+    $("edit-sms").href = "sms:?&body=" + encodeURIComponent(body);
+    $("edit-mail").href = "mailto:?subject=" + encodeURIComponent("My RSVP link for Niah's Day Out") + "&body=" + encodeURIComponent(body);
+    $("edit-link").hidden = false;
+  }
+  $("edit-copy").addEventListener("click", async () => {
+    const b = $("edit-copy"), input = $("edit-url");
+    try { await navigator.clipboard.writeText(input.value); b.textContent = "Copied!"; }
+    catch (_) { input.focus(); input.select(); b.textContent = "Selected, now copy"; }
+    setTimeout(() => { b.textContent = "Copy link"; }, 1800);
+  });
+  $("edit-url").addEventListener("focus", (e) => e.target.select());
+
   let prefilled = false;
   async function loadGuests() {
     const res = await fetch(SCRIPT_URL, { method: "GET" });
@@ -697,7 +742,15 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     if (!prefilled) {
       prefilled = true;
       const me = guests.find(g => g.id === myId);
-      if (me) fillForm(me);
+      if (me) {
+        fillForm(me); showEditLink();
+        if (cameFromLink) {
+          $("rsvp").scrollIntoView({ block: "start" });
+          setStatus(`Welcome back, ${me.name || "cowgirl"}! Your RSVP is loaded. Change anything and tap Save.`, "ok");
+        }
+      } else if (cameFromLink) {
+        setStatus("We couldn't find an RSVP for that link. You can fill in a new one below.", "err");
+      }
     }
     render();
   }
@@ -741,7 +794,8 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       });
       const data = await res.json();
       if (data.ok) {
-        setStatus("Saved. Come back on this same phone or browser to change it.", "ok");
+        setStatus("Saved! Keep your personal link below to change it from any phone.", "ok");
+        showEditLink();
         await loadGuests().catch(() => {});
         if (f.status === "no") sendToNote(f.name);
       } else if (data.error === "not_yours") {

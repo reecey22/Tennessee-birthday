@@ -81,7 +81,7 @@ Friends can send you a note from the **Text Niah** section. Each one is saved to
 
 ## Good to know
 
-- **Changing an RSVP:** friends come back on the same phone or browser and save again. Their row updates instead of duplicating.
+- **Changing an RSVP:** after saving, each friend gets a personal RSVP link (with Copy, Text it to myself, and Email it to myself buttons). Opening it on any device loads their RSVP so they can change it. Coming back on the same phone also works. Anyone with someone's link can edit that RSVP, so it says not to share it.
 - **Fixing things yourself:** edit or delete any row directly in the sheet. Don't change the header row.
 - **Guest list refresh:** the page reloads the list every 30 seconds while it's open.
 - **If you edit `Code.gs` later:** use **Deploy → Manage deployments → Edit (pencil) → Version: New version → Deploy** so the same URL keeps working.
