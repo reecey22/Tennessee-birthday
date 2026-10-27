@@ -797,6 +797,13 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
         setStatus("Saved! Keep your personal link below to change it from any phone.", "ok");
         showEditLink();
         await loadGuests().catch(() => {});
+        // Double-check the sheet kept everything (an outdated Google script quietly drops new choices)
+        const saved = guests.find(g => g.id === myId);
+        const missing = saved ? f.acts.filter(a => !(saved.acts || []).includes(a)) : [];
+        if (missing.length) {
+          const names = ACTS.filter(a => missing.includes(a.id)).map(a => a.label).join(", ");
+          setStatus(`Saved, but the sheet didn't keep: ${names}. Niah needs to update the Google script.`, "err");
+        }
         if (f.status === "no") sendToNote(f.name);
       } else if (data.error === "not_yours") {
         setStatus("This RSVP belongs to a different device. Clear this site's data and try again.", "err");
