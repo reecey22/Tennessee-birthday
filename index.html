@@ -783,12 +783,16 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
         }
       }
       return {
-        play() {
-          ctx.resume();
+        async play() {
+          // iPhones only unlock sound inside a tap, so play a silent blip first, then resume
+          try { const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource(); src.buffer = b; src.connect(ctx.destination); src.start(0); } catch (_) {}
+          try { await ctx.resume(); } catch (_) {}
+          if (ctx.state !== "running") return false;
           if (!timer) { next = ctx.currentTime + .1; pump(); timer = setInterval(pump, 120); }
           master.gain.cancelScheduledValues(ctx.currentTime);
           master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
           master.gain.linearRampToValueAtTime(.8, ctx.currentTime + 1.2);
+          return true;
         },
         pause() {
           master.gain.cancelScheduledValues(ctx.currentTime);
@@ -812,8 +816,11 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
         audio = new Audio(MUSIC_URL); audio.loop = true; audio.volume = .6;
         audio.play().then(() => { playing = true; show(); }).catch(() => { playing = false; show(); });
       } else {
-        synth = westernSynth();
-        if (synth) { synth.play(); playing = true; }
+        synth = synth || westernSynth();
+        if (synth) {
+          playing = true;
+          synth.play().then((ok) => { if (!ok) { playing = false; started = false; arm(); } show(); });
+        }
       }
       show();
     }
@@ -822,19 +829,24 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       playing = !playing;
       if (yt) ytCmd(playing ? "playVideo" : "pauseVideo");
       else if (audio) { playing ? audio.play().catch(() => {}) : audio.pause(); }
-      else if (synth) { playing ? synth.play() : synth.pause(); }
+      else if (synth) {
+        if (playing) synth.play().then((ok) => { if (!ok) { playing = false; show(); } });
+        else synth.pause();
+      }
       show();
     }
     btn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
     if (heroBtn) heroBtn.addEventListener("click", (e) => { e.stopPropagation(); toggle(); });
     // Browsers block sound until a visitor interacts, so the music starts on their first tap, click, or key press.
-    const firstTouch = (e) => {
-      document.removeEventListener("pointerdown", firstTouch, true);
-      document.removeEventListener("keydown", firstTouch, true);
-      if (!started && !btn.contains(e.target) && !(heroBtn && heroBtn.contains(e.target))) start();
-    };
-    document.addEventListener("pointerdown", firstTouch, true);
-    document.addEventListener("keydown", firstTouch, true);
+    // Phones only count a real tap (not a scroll), so if sound didn't unlock, wait for the next tap.
+    const EVENTS = ["click", "touchend", "keydown"];
+    function firstTouch(e) {
+      if (started || btn.contains(e.target) || (heroBtn && heroBtn.contains(e.target))) return;
+      EVENTS.forEach(t => document.removeEventListener(t, firstTouch, true));
+      start();
+    }
+    function arm() { EVENTS.forEach(t => document.addEventListener(t, firstTouch, true)); }
+    arm();
     show();
     return { start, toggle };
   })();
