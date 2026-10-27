@@ -237,6 +237,18 @@ button:focus-visible { outline: 3px solid #d4581f; outline-offset: 2px; }
 .tip { border-top: 3px solid var(--rust); padding-top: 12px; }
 .tip h3 { font-family: var(--body); font-weight: 800; font-size: 18px; margin-bottom: 4px; }
 .tip p { margin: 0; color: var(--muted); font-size: 15px; }
+.pack { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.pack > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 18px 22px; }
+.pack > summary::-webkit-details-marker { display: none; }
+.pack > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 14px; }
+.pack-title { font-family: var(--display); font-size: 22px; color: var(--gold); }
+.pack-count { font-size: 13px; font-weight: 700; color: var(--muted); background: var(--raised); border-radius: 999px; padding: 4px 12px; }
+.pack-toggle { margin-left: auto; font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.pack-toggle::after { content: "Open the list +"; }
+.pack[open] .pack-toggle::after { content: "Close −"; }
+.pack[open] > summary { border-bottom: 1px dashed var(--line); }
+.pack .bag { padding: 22px; }
+.pack #bag-count { display: none; }
 .bag { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
 .bag-group { padding: 24px 22px 20px; min-width: 0; }
 .bag-group h3 { font-family: var(--display); font-size: 20px; color: var(--gold); margin-bottom: 12px; }
@@ -363,6 +375,8 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       <h2>What's in your purse</h2>
       <p class="lede">Carry a small crossbody you can wear on a horse and stash before the zipline. It's a 14-hour day that ends on a cold mountain, so pack for both. Tick things off as you pack; your checklist stays on your device.</p>
     </header>
+    <details class="pack" id="pack">
+      <summary><span class="pack-title">What to pack</span><span class="pack-count" id="pack-count">0 of 16 packed</span><span class="pack-toggle" aria-hidden="true"></span></summary>
     <div class="bag">
       <div class="panel bag-group"><h3>Don't leave without</h3><ul class="checks">
         <li><label><input type="checkbox" id="p-id"><span>ID and a card <small>Needed for the rental car and any age checks</small></span></label></li>
@@ -390,6 +404,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       </ul></div>
     </div>
     <p class="note" id="bag-count">0 of 16 packed</p>
+    </details>
   </div>
 </section>
 
@@ -918,7 +933,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     const boxes = Array.from(document.querySelectorAll("#purse input[type=checkbox]"));
     let saved = {};
     try { saved = JSON.parse(localStorage.getItem("niah-purse") || "{}") || {}; } catch (_) { saved = {}; }
-    const count = () => { $("bag-count").textContent = `${boxes.filter(b => b.checked).length} of ${boxes.length} packed`; };
+    const count = () => { const t = `${boxes.filter(b => b.checked).length} of ${boxes.length} packed`; $("bag-count").textContent = t; $("pack-count").textContent = t; };
     boxes.forEach(b => { b.checked = !!saved[b.id]; b.addEventListener("change", () => { saved[b.id] = b.checked; try { localStorage.setItem("niah-purse", JSON.stringify(saved)); } catch (_) {} count(); }); });
     count();
   })();
