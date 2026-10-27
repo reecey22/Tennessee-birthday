@@ -105,6 +105,11 @@ h2 { font-family: var(--display); }
   .hero .bob, .hero .leg, .hero .tail, .hero .mane, .hero .hair, .hero .afro { animation: none; }
   .hero .tumbleweed { display: none; }
 }
+.music-hint { margin: -4px 0 0; font-size: 13px; font-weight: 600; color: #fbe8cd; opacity: .85; }
+.music-on .music-hint { display: none; }
+.music-toast { position: fixed; z-index: 21; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); transform: translate(-50%, 12px); max-width: calc(100% - 32px); background: var(--gold); color: #2a1406; font-weight: 800; font-size: 14px; padding: 10px 18px; border-radius: 999px; box-shadow: 3px 3px 0 #3a120e, 0 10px 24px rgba(0,0,0,.45); opacity: 0; transition: opacity .35s, transform .35s; pointer-events: none; white-space: nowrap; }
+.music-toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) { .music-toast { transition: none; } }
 .hero-music { display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-weight: 800; font-size: 14px; letter-spacing: .04em; color: #fff3df; background: rgba(26,17,12,.55); border: 1px dashed rgba(255,243,223,.6); border-radius: 4px; padding: 10px 16px; cursor: pointer; box-shadow: none; }
 .hero-music:hover { background: rgba(26,17,12,.75); }
 .hero-music:focus-visible { outline: 3px solid #fff3df; outline-offset: 3px; }
@@ -120,6 +125,24 @@ h2 { font-family: var(--display); }
 .cta:hover { background: #f2bb52; }
 .cta:focus-visible { outline: 3px solid #fff3df; outline-offset: 3px; }
 
+/* Section bands so the page doesn't blur into one long brown scroll */
+.band { padding-block: 64px 64px; margin-top: 56px; position: relative; }
+.band::before, .band::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; background: radial-gradient(circle at 5px 0, transparent 5px, var(--band) 5.5px) 0 0 / 10px 10px repeat-x; }
+.band::before { top: -9px; transform: scaleY(-1); }
+.band::after { bottom: -9px; }
+.band-paper { --band: #e9d4ae; background: #e9d4ae; background-image: radial-gradient(rgba(107,58,28,.08) 1px, transparent 1.4px); background-size: 14px 14px; }
+.band-paper header .eyebrow { color: #8a3a12; }
+.band-paper header .eyebrow::before, .band-paper header .eyebrow::after { color: #a8431f; }
+.band-paper header h2 { color: #2b1a0e; }
+.band-paper header .lede, .band-paper .note { color: #5a3a22; }
+.band-paper .note { border-left-color: #a8431f; }
+.band-oxblood { --band: #4f1316; background: linear-gradient(180deg, #5a1619, #3f0f12); }
+.band-oxblood header .eyebrow { color: var(--gold); }
+.band-oxblood header .lede { color: #e9cfb0; }
+.band + section { margin-top: 24px; }
+/* Fewer stitched borders: keep them on the schedule and guest board only */
+.bag-group.panel::before, .gift.panel::before { display: none; }
+.bag-group, .gift { border: 1px solid var(--line); }
 section { padding-block: 56px 8px; }
 section > .wrap > header { display: grid; gap: 8px; margin-bottom: 28px; justify-items: start; }
 section h2 { font-size: clamp(30px, 5vw, 44px); color: var(--ink); }
@@ -319,6 +342,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
       <a class="cta" href="#rsvp">RSVP</a>
       <button type="button" class="hero-music" id="hero-music" aria-pressed="false">&#9835; <span id="hero-music-label">Play the western music</span></button>
     </div>
+    <p class="music-hint">Sound on? Tap anywhere on the page to start the western music.</p>
   </div>
 </div>
 
@@ -327,13 +351,13 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     <header>
       <span class="eyebrow">The trail</span>
       <h2>How the day runs</h2>
-      <p class="lede">Every stop is within about 30 minutes of downtown. Starred stops are paid and optional, so skip any you like and catch up with the posse at the next one.</p>
+      <p class="lede">Every stop is within about 30 minutes of downtown. Starred stops are paid and optional, so skip any you like and catch up with the posse at the next one. Rock City and the zipline sell timed tickets online, so we'll book once the date is set. RSVP soon.</p>
     </header>
     <div class="panel route-panel">
       <ol class="route">
         <li class="stop"><time>7:30 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ride out of Atlanta</h3><p>Carpool up I-75 North. About 2 hours and 15 minutes with traffic.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/dir/?api=1&origin=Atlanta%2C+GA&destination=Chattanooga%2C+TN&travelmode=driving" target="_blank" rel="noopener">Route from Atlanta</a></div></div></li>
         <li class="stop opt"><time>10:00 am</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Horseback trail ride <span class="price">≈ $50–75</span> <span class="tag">Optional</span></h3><p>Hidden Hills Farm &amp; Saddle Club in McDonald, TN, 25 minutes east of downtown. A guided ride on wooded trails, beginner friendly.</p><div class="stop-links"><a class="stop-link main" href="https://www.hiddenhillsfarm.com/" target="_blank" rel="noopener">Hidden Hills website</a><a class="stop-link" href="tel:+14234883993">Call to book: 423-488-3993</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Hidden+Hills+Farm+%26+Saddle+Club%2C+1106+Pine+Hill+Rd%2C+McDonald%2C+TN+37353" target="_blank" rel="noopener">Directions</a></div></div></li>
-        <li class="stop"><time>12:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Lunch downtown</h3><p>Southside or downtown. Pay your own way.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=restaurants+Southside+Chattanooga+TN" target="_blank" rel="noopener">Southside spots on the map</a></div></div></li>
+        <li class="stop"><time>12:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Lunch downtown</h3><p>Southside or downtown. Pay your own way. Plan on about $40 for food all day: lunch, a snack, and dinner.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=restaurants+Southside+Chattanooga+TN" target="_blank" rel="noopener">Southside spots on the map</a></div></div></li>
         <li class="stop"><time>1:00 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Downtown walk <span class="price">Free</span></h3><p>Walnut Street pedestrian bridge to Coolidge Park and the North Shore shops, back along the Riverwalk to the Bluff View Art District for coffee.</p><div class="stop-links"><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Walnut+Street+Bridge%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Walnut Street Bridge</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Bluff+View+Art+District%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Bluff View Art District</a></div></div></li>
         <li class="stop opt"><time>3:45 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Ruby Falls High Point ZIP <span class="price">$21.95</span> <span class="tag">Optional</span></h3><p>Round-trip zipline plus the 40-foot climbing wall, on Lookout Mountain.</p><div class="stop-links"><a class="stop-link main" href="https://rubyfalls.com/ticketing" target="_blank" rel="noopener">Get zipline tickets</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Ruby+Falls%2C+1720+S+Scenic+Hwy%2C+Chattanooga%2C+TN" target="_blank" rel="noopener">Directions</a></div></div></li>
         <li class="stop opt"><time>5:30 pm</time><span class="rail"><span class="dot"></span></span><div class="body"><h3>Rock City: Enchanted Garden of Lights <span class="price">from $31</span> <span class="tag">Optional</span></h3><p>Millions of lights on the rock trails, hot cocoa, and the "See Seven States" overlook at night. Timed tickets, sold online only.</p><div class="stop-links"><a class="stop-link main" href="https://www.seerockcity.com/enchanted-garden-of-lights" target="_blank" rel="noopener">Get Rock City tickets</a><a class="stop-link" href="https://www.google.com/maps/search/?api=1&query=Rock+City%2C+1400+Patten+Rd%2C+Lookout+Mountain%2C+GA" target="_blank" rel="noopener">Directions</a></div></div></li>
@@ -345,12 +369,12 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
   </div>
 </section>
 
-<section id="outfits">
+<section id="outfits" class="band band-paper">
   <div class="wrap">
     <header>
       <span class="eyebrow">Dress code</span>
       <h2>Fierce fall cowgirl</h2>
-      <p class="lede">Boots, denim, suede, and a hat you're not afraid to ride in. Dress for a saddle at 10 am and cold mountain air at 6 pm, so plan on a layer you can add after dark.</p>
+      <p class="lede">Boots, denim, suede, and a hat you're not afraid to ride in. Dress for a saddle at 10 am and cold mountain air at 6 pm, so plan on a layer you can add after dark. Mid-November nights on Lookout Mountain get cold, so bring a warm jacket for the lights.</p>
     </header>
     <div class="bandana-callout">
       <svg class="bandana" viewBox="0 0 62 50" aria-hidden="true"><path d="M4 4 L58 4 L31 46 Z" fill="#b3122e"/><path d="M8 7 L54 7 L31 42 Z" fill="none" stroke="#fff3df" stroke-width="1" stroke-dasharray="2 2"/><circle cx="16" cy="10" r="1.6" fill="#fff3df"/><circle cx="26" cy="10" r="1.6" fill="#fff3df"/><circle cx="36" cy="10" r="1.6" fill="#fff3df"/><circle cx="46" cy="10" r="1.6" fill="#fff3df"/><circle cx="21" cy="17" r="1.6" fill="#fff3df"/><circle cx="31" cy="17" r="1.6" fill="#fff3df"/><circle cx="41" cy="17" r="1.6" fill="#fff3df"/><circle cx="26" cy="24" r="1.6" fill="#fff3df"/><circle cx="36" cy="24" r="1.6" fill="#fff3df"/><circle cx="31" cy="31" r="1.6" fill="#fff3df"/><path d="M2 4 C-2 2 -1 9 3 8 M60 4 C64 2 63 9 59 8" fill="none" stroke="#b3122e" stroke-width="2.4" stroke-linecap="round"/></svg>
@@ -484,21 +508,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <header>
-      <span class="eyebrow">Before you go</span>
-      <h2>Good to know</h2>
-    </header>
-    <div class="tips">
-      <div class="tip"><h3>Dress in layers</h3><p>Mid-November evenings on Lookout Mountain get cold. Bring a warm jacket for the lights, and boots for the horses.</p></div>
-      <div class="tip"><h3>Tickets go fast</h3><p>Rock City lights and the zipline are timed and sold online. We'll book once the date is set, so RSVP soon.</p></div>
-      <div class="tip"><h3>Splitting the car</h3><p>A one-day rental plus gas and parking runs about $90–140 total, split among everyone riding along.</p></div>
-      <div class="tip"><h3>Food budget</h3><p>Plan on about $40 for lunch, a snack, and dinner on the road.</p></div>
-    </div>
-  </div>
-</section>
-<section id="message">
+<section id="message" class="band band-oxblood">
   <div class="wrap">
     <header>
       <span class="eyebrow">Text Niah</span>
@@ -548,6 +558,7 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
   </div>
 </section>
 
+<div class="music-toast" id="music-toast" role="status" hidden>&#9835; Tap anywhere for the western music</div>
 <button type="button" class="music" id="music" hidden aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Play the music</span></button>
 <footer><div class="wrap"><span class="brand">Happy birthday, Niah</span>Prices are estimates from October 2026 and may change. Hidden Hills, Ruby Falls, and Rock City set their own hours, so confirm before the trip.</div></footer>
 
@@ -748,6 +759,8 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     let audio = null, frame = null, synth = null, playing = false, started = false;
     const heroBtn = $("hero-music"), heroLabel = $("hero-music-label");
     const show = () => {
+      document.body.classList.toggle("music-on", playing);
+      if (playing) hideToast();
       btn.classList.toggle("playing", playing); btn.setAttribute("aria-pressed", String(playing)); label.textContent = playing ? "Pause the music" : "Play the music";
       if (heroBtn) { heroBtn.setAttribute("aria-pressed", String(playing)); heroLabel.textContent = playing ? "Pause the western music" : "Play the western music"; }
     };
@@ -886,6 +899,17 @@ footer .brand { font-family: var(--script); font-size: 22px; color: var(--gold);
     }
     function arm() { EVENTS.forEach(t => document.addEventListener(t, firstTouch, true)); }
     arm();
+    // One-time reminder: the first time someone scrolls without having tapped, show a "tap for music" pill
+    const toast = $("music-toast");
+    let toastTimer = null, toastShown = false;
+    function hideToast() { if (!toast) return; toast.classList.remove("show"); clearTimeout(toastTimer); setTimeout(() => { toast.hidden = true; }, 400); }
+    function onScroll() {
+      if (toastShown || started || scrollY < 140) return;
+      toastShown = true; removeEventListener("scroll", onScroll);
+      toast.hidden = false; requestAnimationFrame(() => toast.classList.add("show"));
+      toastTimer = setTimeout(hideToast, 6000);
+    }
+    addEventListener("scroll", onScroll, { passive: true });
     show();
     return { start, toggle };
   })();
